@@ -1,8 +1,6 @@
 package io.github.z.plugin.itemstats;
 
-import io.github.z.plugin.itemstats.enchantments.DepthStrider;
-import io.github.z.plugin.itemstats.enchantments.TestingFour;
-import io.github.z.plugin.itemstats.enchantments.TestingOne;
+import io.github.z.plugin.itemstats.enchantments.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -10,9 +8,17 @@ import java.util.MissingFormatArgumentException;
 import java.util.Objects;
 
 public enum EnchantmentType {
+    //Custom enchantments
+    //TESTING
     TESTING1(new TestingOne(), "Testing 1", true, false),
     TESTING4(new TestingFour(), "Testing 4", true, false),
+    LOG_DAMAGE(new LogDamage(), "Log Damage", false, false),
+
+    //REAL
     DEPTH_STRIDER(new DepthStrider(), "Depth Strider", true, false),
+    POINT_BLANK(new PointBlank(), "Point Blank", true, false),
+
+    //Vanilla Enchantments
     CURSE_OF_VANISHING(Enchantment.VANISHING_CURSE, "Curse of Vanishing", false, true);
 
     private final io.github.z.plugin.itemstats.Enchantment mStat;

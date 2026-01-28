@@ -3,6 +3,7 @@ package io.github.z.plugin.itemstats;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadableItemNBT;
 import de.tr7zw.nbtapi.iface.ReadableNBT;
+import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -43,7 +44,17 @@ public class ItemStatManager {
     }
 
 
-
+    public static void onHurt(Player player, DamageEvent event){
+        if(event.isCancelled()){
+            Bukkit.getLogger().info("Custom damage event CANCELLED.");
+            return;
+        }
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onHurt(player, event, entry.getValue());
+            }
+        }
+    }
 
 
 
@@ -60,7 +71,6 @@ public class ItemStatManager {
             private final Map<ItemStat, Double> mMap = new LinkedHashMap<>();
 
             public void add(ItemStat stat, double value){
-                Bukkit.getLogger().info(value + "");
                 if(value == 0){
                     return;
                 }

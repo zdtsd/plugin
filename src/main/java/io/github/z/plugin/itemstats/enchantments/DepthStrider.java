@@ -16,7 +16,7 @@ public class DepthStrider implements Enchantment {
     }
 
     @Override
-    public void onApply(ItemStack item, int level){
-        ItemStatUtils.setItemAttr(item, Attribute.GENERIC_WATER_MOVEMENT_EFFICIENCY.getKey().getKey(), level * speedPerLevel);
+    public void onUpdate(ItemStack item, double level){
+        ItemStatUtils.setItemAttr(item, Attribute.GENERIC_WATER_MOVEMENT_EFFICIENCY.getKey().getKey(), level * speedPerLevel, false);
     }
 }

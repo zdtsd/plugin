@@ -1,0 +1,19 @@
+package io.github.z.plugin.itemstats.attributes;
+
+import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.itemstats.Attribute;
+import org.bukkit.entity.Player;
+
+public class MeleeDamageAdd implements Attribute {
+    @Override
+    public String getName() {
+        return "melee_damage";
+    }
+
+    @Override
+    public void onHurt(Player player, DamageEvent event, double level){
+        if(event.isMelee()){
+            event.addBaseDamage(level);
+        }
+    }
+}

@@ -10,6 +10,11 @@ import java.util.Set;
 public enum AttributeType {
     //Custom Attributes
     CUSTOM_DEFENSE(new Defense(), "Defense"),
+    PROJ_DAMAGE_PERCENT(new PercentProjDamage(), "% Projectile Damage"),
+    ATTACK_DAMAGE_BASE(new BaseAttackDamage(), "Attack Damage", true),
+    ATTACK_SPEED_BASE(new BaseAttackSpeed(), "Attack Speed", true),
+    MELEE_DAMAGE(new MeleeDamageAdd(), "Melee Damage"),
+    MELEE_DAMAGE_PERCENT(new MeleeDamagePercent(), "% Melee Damage"),
 
 
     //Vanilla Attributes
@@ -19,10 +24,11 @@ public enum AttributeType {
     MAX_HEALTH_PERCENT(Attribute.GENERIC_MAX_HEALTH, "% Max Health", true),
     MOVEMENT_SPEED(Attribute.GENERIC_MOVEMENT_SPEED, "Speed", false),
     MOVEMENT_SPEED_PERCENT(Attribute.GENERIC_MOVEMENT_SPEED, "% Speed", true),
-    ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, "Attack Speed", false),
     ATTACK_SPEED_PERCENT(Attribute.GENERIC_ATTACK_SPEED, "% Attack Speed", true),
 
     //Hidden attributes (Represented by enchantments)
+
+    ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, "", false),
     DEPTH_STRIDER(Attribute.GENERIC_WATER_MOVEMENT_EFFICIENCY, "", false);
 
     public static final String PERCENTAGE_STRING = "_percent";
@@ -31,13 +37,18 @@ public enum AttributeType {
     private final String mName;
     private final String mDisplayName;
     private final boolean mIsVanillaPercentage;
+    private final boolean mIsBaseStat;
 
     AttributeType(ItemStat stat, String displayName) {
+        this(stat, displayName, false);
+    }
+    AttributeType(ItemStat stat, String displayName, boolean isBaseStat) {
         mStat = stat;
         mVanillaStat = null;
         mName = stat.getName();
         mIsVanillaPercentage = false;
         mDisplayName = displayName;
+        mIsBaseStat = isBaseStat;
     }
     AttributeType(Attribute stat, String displayName, boolean isPercentage) {
         mStat = null;
@@ -45,6 +56,7 @@ public enum AttributeType {
         mName = isPercentage ? stat.getKey().getKey() + PERCENTAGE_STRING : stat.getKey().getKey();
         mIsVanillaPercentage = isPercentage;
         mDisplayName = displayName;
+        mIsBaseStat = false;
     }
 
     public String getName(){
@@ -63,9 +75,11 @@ public enum AttributeType {
     }
 
     public boolean isVanilla(){ return mVanillaStat != null;}
-    private static final Set<AttributeType> VanillaAttributes = Collections.emptySet();
-
     public boolean isVanillaPercentage(){
         return mIsVanillaPercentage;
+    }
+
+    public boolean isBaseStat(){
+        return mIsBaseStat;
     }
 }

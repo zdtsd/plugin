@@ -144,6 +144,13 @@ public class ItemStatUtils {
     * Each stat tag contains a value tag which contains a double.
     *
     * */
+    public static Map<ItemStat, Double> getItemStatsUnsplit(ItemStack item){
+        Map<ItemStat, Double> itemStats = new HashMap<>();
+        List<Map<ItemStat, Double>> splitStats = getItemStats(item);
+        itemStats.putAll(splitStats.get(0));
+        itemStats.putAll(splitStats.get(1));
+        return itemStats;
+    }
     public static List<Map<ItemStat, Double>> getItemStats(ItemStack item){
         List<Map<ItemStat, Double>> itemStats = new ArrayList<>();
 
@@ -169,7 +176,6 @@ public class ItemStatUtils {
                     else if(stat instanceof Enchantment){
                         double statValueEnch = getItemEnch(item, stat.getName());
                         if(statValueEnch != 0){
-                            Bukkit.getLogger().info("HAS STAT: " + stat.getName());
                             itemEnchs.put(stat, statValueEnch);
                         }
                     }
@@ -209,8 +215,10 @@ public class ItemStatUtils {
             }
         });
     }
-
     public static void setItemAttr(ItemStack item, String attrName, double value){
+        setItemAttr(item, attrName, value, true);
+    }
+    public static void setItemAttr(ItemStack item, String attrName, double value, boolean updateItem){
         if(item == null || item.isEmpty() || item.getType() == Material.AIR){
             return;
         }
@@ -222,13 +230,15 @@ public class ItemStatUtils {
             }
             else{
                 itemAttrNBT.getOrCreateCompound(attrName).setDouble(attrValueTag, value);
-                Bukkit.getLogger().info(attrName + " SET TO " + nbt.getOrCreateCompound(itemStatNBTTag).getOrCreateCompound(itemAttrNBTTag).getCompound(attrName).getDouble(attrValueTag));
             }
         });
-        updateItem(item);
+        if(updateItem){updateItem(item);}
     }
 
     public static void setItemEnch(ItemStack item, String enchName, double value){
+        setItemEnch(item, enchName, value, true);
+    }
+    public static void setItemEnch(ItemStack item, String enchName, double value, boolean updateItem){
         if(item == null || item.isEmpty() || item.getType() == Material.AIR){
             return;
         }
@@ -241,12 +251,7 @@ public class ItemStatUtils {
                 itemAttrNBT.getOrCreateCompound(enchName).setDouble(enchValueTag, value);
             }
         });
-        //Run on apply code
-        EnchantmentType type = EnchantmentType.getTypeFromName(enchName);
-        if(type != null && !type.isVanilla()){
-            type.getItemStat().onApply(item, (int) value);
-        }
-        updateItem(item);
+        if(updateItem){updateItem(item);}
     }
 
     public static ItemStack getHeldItem(Player player){
@@ -300,11 +305,17 @@ public class ItemStatUtils {
                 if(!name.startsWith("%")){
                     levelDisplay += " ";
                 }
-                //Select operation
-                String operation = rawLevel > 0 ? "+" : "-";
+                //Select operation and color
+                String operation  = "";
+                NamedTextColor color = NamedTextColor.DARK_GREEN;
+                if(!type.isBaseStat()){
+                    operation = rawLevel > 0 ? "+" : "-";
+                    color = rawLevel > 0 ? NamedTextColor.BLUE : NamedTextColor.RED;
+                }
+
 
                 Component line = Component.text( operation + levelDisplay  + name)
-                        .color(rawLevel > 0 ? NamedTextColor.BLUE : NamedTextColor.RED)
+                        .color(color)
                         .decoration(TextDecoration.ITALIC, false);
                 lore.add(line);
             }
@@ -370,8 +381,20 @@ public class ItemStatUtils {
                 }
             });
         });
+
+
+    }
+
+    private static void itemOnUpdate(ItemStack item){
+        for(ItemStat stat : ITEM_STATS){
+            Map<ItemStat, Double> itemStats = getItemStatsUnsplit(item);
+            if(itemStats.containsKey(stat)){
+                stat.onUpdate(item, itemStats.get(stat));
+            }
+        }
     }
     public static void updateItem(ItemStack item){
+        itemOnUpdate(item);
         updateItemLore(item);
         updateItemAttributesAndEnchantments(item);
         if(getSlot(item) == null){

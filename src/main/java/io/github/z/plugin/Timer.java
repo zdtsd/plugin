@@ -24,7 +24,6 @@ public class Timer {
 
         if(fourHz){
             for(Player player : PlayerUtils.getOnlinePlayers()){
-                Bukkit.getLogger().info("4Hz");
                 ItemStatManager.updateStats(player);
                 ItemStatManager.tick(mPlugin, player, twoHz, oneHz);
             }
