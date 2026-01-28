@@ -4,7 +4,7 @@ import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Attribute;
 import org.bukkit.entity.Player;
 
-public class PercentProjDamage implements Attribute {
+public class ProjDamagePercent implements Attribute {
     @Override
     public String getName() {
         return "proj_damage_percent";

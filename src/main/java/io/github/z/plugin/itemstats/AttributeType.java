@@ -1,16 +1,13 @@
 package io.github.z.plugin.itemstats;
 
 import io.github.z.plugin.itemstats.attributes.*;
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
-
-import java.util.Collections;
-import java.util.Set;
 
 public enum AttributeType {
     //Custom Attributes
     CUSTOM_DEFENSE(new Defense(), "Defense"),
-    PROJ_DAMAGE_PERCENT(new PercentProjDamage(), "% Projectile Damage"),
+    PROJ_DAMAGE(new ProjDamageAdd(), "Projectile Damage"),
+    PROJ_DAMAGE_PERCENT(new ProjDamagePercent(), "% Projectile Damage"),
     ATTACK_DAMAGE_BASE(new BaseAttackDamage(), "Attack Damage", true),
     ATTACK_SPEED_BASE(new BaseAttackSpeed(), "Attack Speed", true),
     MELEE_DAMAGE(new MeleeDamageAdd(), "Melee Damage"),

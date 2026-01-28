@@ -2,18 +2,17 @@ package io.github.z.plugin.itemstats.attributes;
 
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Attribute;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class MeleeDamageAdd implements Attribute {
+public class ProjDamageAdd implements Attribute {
     @Override
     public String getName() {
-        return "melee_damage";
+        return "proj_damage_add";
     }
 
     @Override
     public void onHurt(Player player, DamageEvent event, double level){
-        if(event.getType() == DamageEvent.DamageType.MELEE_ATTACK){
+        if(event.getType() == DamageEvent.DamageType.PROJ_ATTACK){
             event.addBaseDamage(level);
         }
     }
