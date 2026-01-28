@@ -4,6 +4,8 @@ import io.github.z.plugin.commands.SetItemAttributeCommand;
 import io.github.z.plugin.commands.SetItemEnchantmentCommand;
 import io.github.z.plugin.commands.SetSlotCommand;
 import io.github.z.plugin.commands.UpdateItemCommand;
+import io.github.z.plugin.itemstats.ItemStat;
+import io.github.z.plugin.itemstats.ItemStatUtils;
 import io.github.z.plugin.listeners.DamageListener;
 import io.github.z.plugin.listeners.LoginLogoutListener;
 import org.bukkit.Bukkit;
@@ -23,6 +25,10 @@ public final class Plugin extends JavaPlugin {
         new UpdateItemCommand().register();
         new SetSlotCommand().register();
         Timer.setPlugin(this);
+
+        for(ItemStat stat : ItemStatUtils.getAllStats()){
+            Bukkit.getLogger().info(stat.getName());
+        }
     }
 
     @Override

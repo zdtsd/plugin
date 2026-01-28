@@ -144,21 +144,10 @@ public class ItemStatUtils {
     * Each stat tag contains a value tag which contains a double.
     *
     * */
-    public static Map<ItemStat, Double> getItemStatsUnsplit(ItemStack item){
+
+    public static Map<ItemStat, Double> getItemStats(ItemStack item){
+
         Map<ItemStat, Double> itemStats = new HashMap<>();
-        List<Map<ItemStat, Double>> splitStats = getItemStats(item);
-        itemStats.putAll(splitStats.get(0));
-        itemStats.putAll(splitStats.get(1));
-        return itemStats;
-    }
-    public static List<Map<ItemStat, Double>> getItemStats(ItemStack item){
-        List<Map<ItemStat, Double>> itemStats = new ArrayList<>();
-
-        Map<ItemStat, Double> itemAttrs = new HashMap<>();
-        Map<ItemStat, Double> itemEnchs= new HashMap<>();
-
-        itemStats.add(itemAttrs);
-        itemStats.add(itemEnchs);
 
         //Return if invalid item
         if(item == null || item.isEmpty() || item.getType() == Material.AIR){
@@ -171,12 +160,14 @@ public class ItemStatUtils {
                 for(ItemStat stat : ITEM_STATS){
                     if(stat instanceof Attribute){
                         double statValue = getItemAttr(item, stat.getName());
-                        itemAttrs.put(stat, statValue);
+                        if(statValue != 0){
+                            itemStats.put(stat, statValue);
+                        }
                     }
                     else if(stat instanceof Enchantment){
                         double statValueEnch = getItemEnch(item, stat.getName());
                         if(statValueEnch != 0){
-                            itemEnchs.put(stat, statValueEnch);
+                            itemStats.put(stat, statValueEnch);
                         }
                     }
                 }
@@ -387,8 +378,8 @@ public class ItemStatUtils {
 
     private static void itemOnUpdate(ItemStack item){
         for(ItemStat stat : ITEM_STATS){
-            Map<ItemStat, Double> itemStats = getItemStatsUnsplit(item);
-            if(itemStats.containsKey(stat)){
+            Map<ItemStat, Double> itemStats = getItemStats(item);
+            if(itemStats.containsKey(stat) && itemStats.get(stat) != 0){
                 stat.onUpdate(item, itemStats.get(stat));
             }
         }

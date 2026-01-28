@@ -28,7 +28,7 @@ public enum AttributeType {
 
     //Hidden attributes (Represented by enchantments)
 
-    ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, "", false),
+    ATTACK_SPEED(Attribute.GENERIC_ATTACK_SPEED, "REAL ATTACK SPEED", false),
     DEPTH_STRIDER(Attribute.GENERIC_WATER_MOVEMENT_EFFICIENCY, "", false);
 
     public static final String PERCENTAGE_STRING = "_percent";

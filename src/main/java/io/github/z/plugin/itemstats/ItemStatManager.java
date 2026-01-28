@@ -68,7 +68,7 @@ public class ItemStatManager {
     public static class PlayerItemStats{
         public static class ItemStatData implements Iterable<Map.Entry<ItemStat, Double>> {
 
-            private final Map<ItemStat, Double> mMap = new LinkedHashMap<>();
+            private Map<ItemStat, Double> mMap = new LinkedHashMap<>();
 
             public void add(ItemStat stat, double value){
                 if(value == 0){
@@ -119,6 +119,17 @@ public class ItemStatManager {
                 }
             }
 
+            public void sort(){
+                Map<ItemStat, Double> sortedMap = new LinkedHashMap<>();
+                for(ItemStat stat : ItemStatUtils.getAllStats()){
+                    Double value = mMap.get(stat);
+                    if(value != null){
+                        sortedMap.put(stat, value);
+                    }
+                }
+                mMap = sortedMap;
+            }
+
             @NotNull
             @Override
             public Iterator<Map.Entry<ItemStat, Double>> iterator() {
@@ -147,10 +158,10 @@ public class ItemStatManager {
 
             //Fetch the stats of the item
             for(ItemStack item : applicableItems){
-                List<Map<ItemStat, Double>> itemStats = ItemStatUtils.getItemStats(item);
+                Map<ItemStat, Double> itemStats = ItemStatUtils.getItemStats(item);
                 //Get enchantments and attributes
-                newArmorStats.add(itemStats.get(0));
-                newArmorStats.add(itemStats.get(1));
+                newArmorStats.add(itemStats);
+                newArmorStats.sort();
             }
             mFinalStats = newArmorStats;
 

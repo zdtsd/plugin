@@ -129,6 +129,7 @@ public class DamageEvent extends Event implements Cancellable {
     private double mDamageResistanceDivisor = 1;
     private boolean mIsCrit = false;
 
+    //TODO: Detect crits when using an item without any base attack damage (Not very important).
     public DamageEvent(EntityDamageEvent event, LivingEntity damagee) {
         this(event, damagee, DamageType.getType(event.getCause()));
     }
@@ -168,6 +169,7 @@ public class DamageEvent extends Event implements Cancellable {
     }
     public void setBaseDamage(double baseDamage){
         mBaseDamage = baseDamage;
+        recalculateDamage();
     }
     public void addDamageMultiplier(double mult){
         mDamageMultiplier += mult - 1;
