@@ -1,21 +1,12 @@
 package io.github.z.plugin.itemstats;
 
-import de.tr7zw.nbtapi.NBT;
-import de.tr7zw.nbtapi.iface.ReadableItemNBT;
-import de.tr7zw.nbtapi.iface.ReadableNBT;
 import io.github.z.plugin.events.DamageEvent;
-import io.github.z.plugin.utils.ItemUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ItemStatManager {
@@ -43,6 +34,18 @@ public class ItemStatManager {
         return playerStats.get(player.getUniqueId()).getItemStats().get(stat);
     }
 
+
+    public static void onDamage(Player player, DamageEvent event){
+        if(event.isCancelled()){
+            Bukkit.getLogger().info("Custom damage event CANCELLED.");
+            return;
+        }
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onDamage(player, event, entry.getValue());
+            }
+        }
+    }
 
     public static void onHurt(Player player, DamageEvent event){
         if(event.isCancelled()){

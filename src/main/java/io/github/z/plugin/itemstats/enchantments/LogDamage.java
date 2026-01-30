@@ -12,7 +12,7 @@ public class LogDamage implements Enchantment {
     }
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         Bukkit.getLogger().info("Player " + player.getName() + " dealt " + event.getDamage() + " damage.");
     }
 

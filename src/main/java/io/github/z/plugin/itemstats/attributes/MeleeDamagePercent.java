@@ -11,7 +11,7 @@ public class MeleeDamagePercent implements Attribute {
     }
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         if(event.isMelee()){
             event.addGearMultiplier(1 + level / 100);
         }

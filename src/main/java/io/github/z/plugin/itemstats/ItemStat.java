@@ -45,9 +45,12 @@ public interface ItemStat {
 
     }
 
-    default void onHurt(Player player, DamageEvent event, double level){
+    default void onDamage(Player player, DamageEvent event, double level){
 
     }
+    default void onHurt(Player player, DamageEvent event, double level){
+
+    };
 
 
 

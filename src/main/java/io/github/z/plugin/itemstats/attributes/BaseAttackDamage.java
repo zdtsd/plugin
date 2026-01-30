@@ -18,7 +18,7 @@ public class BaseAttackDamage implements Attribute {
 
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         if(event.getType() == DamageEvent.DamageType.MELEE_ATTACK){
             event.setBaseDamage(level * player.getCooledAttackStrength(0));
             event.setIsCrit(PlayerUtils.isFallingAttack(player));

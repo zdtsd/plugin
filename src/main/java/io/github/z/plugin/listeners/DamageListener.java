@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageListener implements Listener {
@@ -32,6 +31,9 @@ public class DamageListener implements Listener {
         Entity source = event.getSource();
 
         if(source instanceof Player player){
+            ItemStatManager.onDamage(player, event);
+        }
+        if(damagee instanceof Player player){
             ItemStatManager.onHurt(player, event);
         }
     }

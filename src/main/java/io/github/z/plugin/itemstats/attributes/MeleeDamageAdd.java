@@ -12,7 +12,7 @@ public class MeleeDamageAdd implements Attribute {
     }
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         if(event.getType() == DamageEvent.DamageType.MELEE_ATTACK){
             event.addBaseDamage(level);
         }

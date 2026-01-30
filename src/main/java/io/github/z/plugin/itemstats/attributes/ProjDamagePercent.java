@@ -11,7 +11,7 @@ public class ProjDamagePercent implements Attribute {
     }
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         if(event.isProjectile()){
             event.addGearMultiplier(1 + level / 100);
         }

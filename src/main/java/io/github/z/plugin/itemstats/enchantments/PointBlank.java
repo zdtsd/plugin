@@ -15,7 +15,7 @@ public class PointBlank implements Enchantment {
     }
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onDamage(Player player, DamageEvent event, double level){
         if(event.isProjectile() && player.getLocation().distance(event.getDamagee().getLocation()) <= maxRange){
             event.addBaseDamage(level * boostPerLevel);
         }
