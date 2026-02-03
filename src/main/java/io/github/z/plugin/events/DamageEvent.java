@@ -127,6 +127,7 @@ public class DamageEvent extends Event implements Cancellable {
     private double mDamageMultiplier = 1;
     private double mGearDamageMultiplier = 1;
     private double mDamageResistanceDivisor = 1;
+    private double mMultiplicativeStackingModifier = 1;
     private boolean mIsCrit = false;
 
     //TODO: Detect crits when using an item without any base attack damage (Not very important).
@@ -180,9 +181,14 @@ public class DamageEvent extends Event implements Cancellable {
         recalculateDamage();
     }
 
+    public void addMultiplicativeModifier(double modifier){
+        mMultiplicativeStackingModifier *= modifier;
+        recalculateDamage();
+    }
+
     private static final double MAX_DAMAGE = 100000;
     private void recalculateDamage(){
-        double damage = Math.max((mBaseDamage * mGearDamageMultiplier * mDamageMultiplier * mDamageResistanceDivisor * critModifier()), 0);
+        double damage = Math.max((mBaseDamage * mGearDamageMultiplier * mDamageMultiplier * mDamageResistanceDivisor * mMultiplicativeStackingModifier * critModifier()), 0);
         if(mEvent.getCause() == DamageCause.POISON && damage >= mDamagee.getHealth()){
             damage = mDamagee.getHealth() - 1;
         }

@@ -2,6 +2,8 @@ package io.github.z.plugin.itemstats;
 
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -50,7 +52,15 @@ public interface ItemStat {
     }
     default void onHurt(Player player, DamageEvent event, double level){
 
-    };
+    }
+
+    default void onProjectileLaunch(Player player, ProjectileLaunchEvent event, double level){
+
+    }
+
+    default void onBowShoot(Player player, EntityShootBowEvent event, double level){
+
+    }
 
 
 

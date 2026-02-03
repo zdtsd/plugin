@@ -3,7 +3,13 @@ package io.github.z.plugin.itemstats.attributes;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Attribute;
 import io.github.z.plugin.utils.PlayerUtils;
+import io.github.z.plugin.utils.ProjectileUtils;
+import io.github.z.plugin.utils.ScoreboardUtils;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 
 public class BaseProjDamage implements Attribute {
     @Override
@@ -16,12 +22,8 @@ public class BaseProjDamage implements Attribute {
         return -100;
     }
 
-
-    //TODO: Track base damage of arrow when shot rather than on hit.
     @Override
-    public void onDamage(Player player, DamageEvent event, double level){
-        if(event.getType() == DamageEvent.DamageType.PROJ_ATTACK){
-            event.setBaseDamage(level);
-        }
+    public void onProjectileLaunch(Player player, ProjectileLaunchEvent event, double level){
+        ProjectileUtils.setDamage(event.getEntity(), level);
     }
 }

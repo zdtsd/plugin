@@ -3,6 +3,8 @@ package io.github.z.plugin.itemstats;
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +57,22 @@ public class ItemStatManager {
         if(playerStats.containsKey(player.getUniqueId())){
             for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
                 entry.getKey().onHurt(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onProjectileLaunch(Player player, ProjectileLaunchEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onProjectileLaunch(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onBowShoot(Player player, EntityShootBowEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onBowShoot(player, event, entry.getValue());
             }
         }
     }
