@@ -9,6 +9,7 @@ public enum AttributeType {
     ATTACK_DAMAGE_BASE(new BaseAttackDamage(), "Attack Damage", true),
     ATTACK_SPEED_BASE(new BaseAttackSpeed(), "Attack Speed", true),
     PROJECTILE_DAMAGE_BASE(new BaseProjDamage(), "Projectile Damage", true),
+    PROJECTILE_SPEED_BASE(new BaseProjectileSpeed(), "Projectile Speed", true),
 
     //Custom Attributes
     CUSTOM_DEFENSE(new Defense(), "Defense"),
