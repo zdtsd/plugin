@@ -1,6 +1,7 @@
 package io.github.z.plugin.itemstats;
 
 import io.github.z.plugin.events.DamageEvent;
+import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -73,6 +74,22 @@ public class ItemStatManager {
         if(playerStats.containsKey(player.getUniqueId())){
             for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
                 entry.getKey().onBowShoot(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onCrossbowShoot(Player player, EntityShootBowEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onCrossbowShoot(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onCrossbowLoad(Player player, EntityLoadCrossbowEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onCrossbowLoad(player, event, entry.getValue());
             }
         }
     }

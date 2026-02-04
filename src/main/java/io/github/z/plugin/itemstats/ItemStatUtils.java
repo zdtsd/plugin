@@ -28,6 +28,8 @@ import java.util.*;
 public class ItemStatUtils {
 
     private static final String itemStatNBTTag = "itemStats";
+    private static final String modifiedDataNBTTag = "itemData";
+    private static final String dataValueNBTTag = "dataValue";
     private static final String itemAttrNBTTag = "itemAttr";
     private static final String itemEnchNBTTag = "itemEnch";
     private static final String attrValueTag = "attrValue";
@@ -243,6 +245,35 @@ public class ItemStatUtils {
             }
         });
         if(updateItem){updateItem(item);}
+    }
+
+    public static void setItemData(ItemStack item, String dataName, double value){
+        if(item == null || item.isEmpty() || item.getType() == Material.AIR){
+            return;
+        }
+        NBT.modify(item, nbt -> {
+            ReadWriteNBT itemDataNBT = nbt.getOrCreateCompound(modifiedDataNBTTag);
+            if(value == 0){
+                itemDataNBT.removeKey(dataName);
+            }
+            else{
+                itemDataNBT.getOrCreateCompound(dataName).setDouble(dataValueNBTTag, value);
+            }
+        });
+    }
+
+    public static double getItemData(ItemStack item, String dataName){
+        if(item == null || item.isEmpty() || item.getType() == Material.AIR){
+            return 0;
+        }
+        return NBT.get(item, nbt -> {
+            try{
+                return nbt.getCompound(modifiedDataNBTTag).getCompound(dataName).getDouble(dataValueNBTTag);
+            }
+            catch (NullPointerException e){
+                return 0.0;
+            }
+        });
     }
 
     public static ItemStack getHeldItem(Player player){

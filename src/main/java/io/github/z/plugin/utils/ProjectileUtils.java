@@ -15,6 +15,7 @@ public class ProjectileUtils {
 
     public static final String projDamageScoreboardName = "ProjDamageScoreboard";
     public static final String projForceScoreboardName = "ProjForceScoreboard";
+    public static final String crossbowAmmoNBTTag = "crossbowAmmo";
 
     //Default damage for a projectile without modifications.
     private static final int defaultProjDamage = 1;
@@ -24,7 +25,6 @@ public class ProjectileUtils {
     private static final double forceScalar = 1000;
 
     public static void setDamage(Projectile projectile, double damage){
-        Bukkit.getLogger().info("ProjUtils setting damage to " + (int) (damage * damageScalar));
         ScoreboardUtils.setScore(projectile, projDamageScoreboardName, (int) (damage * damageScalar));
     }
 

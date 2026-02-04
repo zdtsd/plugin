@@ -15,7 +15,6 @@ public class ScoreboardUtils {
 
 
     public static void setScore(Entity entity, String objectiveName, int value) {
-        Bukkit.getLogger().info("ScoreboardUtils setting score to " + value);
         if (entity instanceof Player) {
             setScore(entity.getName(), objectiveName, value);
         } else {
@@ -27,7 +26,6 @@ public class ScoreboardUtils {
 
         Objective obj = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(objectiveName);
         if(obj != null){
-            Bukkit.getLogger().info("ScoreboardUtils setting " + obj.getName() + " to " + value);
             Score score = obj.getScore(entry);
             score.setScore(value);
         }

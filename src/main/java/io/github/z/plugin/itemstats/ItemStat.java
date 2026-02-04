@@ -1,6 +1,7 @@
 package io.github.z.plugin.itemstats;
 
 import io.github.z.plugin.events.DamageEvent;
+import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -59,6 +60,14 @@ public interface ItemStat {
     }
 
     default void onBowShoot(Player player, EntityShootBowEvent event, double level){
+
+    }
+
+    default void onCrossbowShoot(Player player, EntityShootBowEvent event, double level){
+
+    }
+
+    default void onCrossbowLoad(Player player, EntityLoadCrossbowEvent event, double level){
 
     }
 
