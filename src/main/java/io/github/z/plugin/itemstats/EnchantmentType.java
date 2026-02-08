@@ -17,6 +17,12 @@ public enum EnchantmentType {
     //REAL
     DEPTH_STRIDER(new DepthStrider(), "Depth Strider", true, false),
     POINT_BLANK(new PointBlank(), "Point Blank", true, false),
+    MELEE_PROTECTION(new MeleeProtection(), "Melee Protection", true, false),
+    PROJ_PROTECTION(new ProjectileProtection(), "Projectile Protection", true, false),
+    MAGIC_PROTECTION(new MagicProtection(), "Magic Protection", true, false),
+    FALL_PROTECTION(new FeatherFalling(), "Feather Falling", true, false),
+    FIRE_PROTECTION(new FireProtection(), "Fire Protection", true, false),
+    BLAST_PROTECTION(new BlastProtection(), "Blast Protection", true, false),
 
     //Vanilla Enchantments
     CURSE_OF_VANISHING(Enchantment.VANISHING_CURSE, "Curse of Vanishing", false, true);

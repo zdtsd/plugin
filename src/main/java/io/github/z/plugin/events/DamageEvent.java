@@ -50,10 +50,6 @@ public class DamageEvent extends Event implements Cancellable {
                 case FALL, FLY_INTO_WALL -> FALL;
                 case POISON, WITHER -> AILMENT;
                 case VOID, KILL, SUICIDE -> TRUE;
-                default -> {
-                    Bukkit.getLogger().info("Unknown damage type detected!");
-                    yield OTHER;
-                }
             };
         }
 
@@ -86,6 +82,15 @@ public class DamageEvent extends Event implements Cancellable {
 
         public boolean isProjectile(){
             return projectileDamage.contains(this);
+        }
+
+        private static final Set<DamageType> magicDamage = EnumSet.of(MAGIC_ATTACK, MAGIC_SKILL, MAGIC_ENCH);
+        public static boolean isMagic(DamageType type){
+            return type.isMagic();
+        }
+
+        public boolean isMagic(){
+            return magicDamage.contains(this);
         }
     }
 
@@ -227,9 +232,13 @@ public class DamageEvent extends Event implements Cancellable {
     public boolean isProjectile(){
         return mMetadata.mType.isProjectile();
     }
+    public boolean isMagic(){
+        return mMetadata.mType.isMagic();
+    }
     public boolean isEnvironmental(){
         return mMetadata.mType.isEnvironmental();
     }
+    public boolean isType(DamageType type) {return mMetadata.mType == type;}
 
     public DamageType getType(){
         return mMetadata.mType;
