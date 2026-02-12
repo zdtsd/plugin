@@ -23,7 +23,6 @@ public class ScoreboardUtils {
     }
 
     public static void setScore(String entry, String objectiveName, int value){
-
         Objective obj = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(objectiveName);
         if(obj != null){
             Score score = obj.getScore(entry);
