@@ -1,13 +1,11 @@
 package io.github.z.plugin;
 
 import io.github.z.plugin.abilities.AbilityManager;
-import io.github.z.plugin.commands.SetItemAttributeCommand;
-import io.github.z.plugin.commands.SetItemEnchantmentCommand;
-import io.github.z.plugin.commands.SetSlotCommand;
-import io.github.z.plugin.commands.UpdateItemCommand;
+import io.github.z.plugin.commands.*;
 import io.github.z.plugin.itemstats.ItemStat;
 import io.github.z.plugin.itemstats.ItemStatUtils;
 import io.github.z.plugin.listeners.DamageListener;
+import io.github.z.plugin.listeners.GUIListener;
 import io.github.z.plugin.listeners.LoginLogoutListener;
 import io.github.z.plugin.listeners.PlayerListener;
 import io.github.z.plugin.utils.ProjectileUtils;
@@ -33,9 +31,11 @@ public final class Plugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LoginLogoutListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
 
         //Set up utils.
-        mAbilityManager = new AbilityManager();
+        //TODO: Uncomment
+       // mAbilityManager = new AbilityManager();
         projectileUtils = new ProjectileUtils();
 
         //Register commands
@@ -44,6 +44,7 @@ public final class Plugin extends JavaPlugin {
         new SetItemEnchantmentCommand().register();
         new UpdateItemCommand().register();
         new SetSlotCommand().register();
+        new OpenClassGUICommand().register();
         Timer.setPlugin(this);
 
         for(ItemStat stat : ItemStatUtils.getAllStats()){
