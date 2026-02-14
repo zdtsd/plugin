@@ -38,7 +38,7 @@ public interface GenericPlayerModifier {
 	@param oneHz: true every 20 ticks
      */
 
-    default void tick(Plugin plugin, Player player, double value, boolean twoHz, boolean oneHz){
+    default void tick(Player player, double value, boolean twoHz, boolean oneHz){
 
     }
 

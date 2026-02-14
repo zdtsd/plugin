@@ -17,9 +17,9 @@ public class ItemStatManager {
     public static Map<UUID, PlayerItemStats> playerStats = new WeakHashMap<>();
 
 
-    public static void tick(Plugin plugin, Player player, boolean twoHz, boolean oneHz){
+    public static void tick(Player player, boolean twoHz, boolean oneHz){
         for(Map.Entry<UUID, PlayerItemStats> entry : playerStats.entrySet()){
-            entry.getValue().tick(plugin, player, twoHz, oneHz);
+            entry.getValue().tick(player, twoHz, oneHz);
         }
     }
 
@@ -151,9 +151,9 @@ public class ItemStatManager {
                 return value;
             }
 
-            public void tick(Plugin plugin, Player player, boolean twoHz, boolean oneHz){
+            public void tick(Player player, boolean twoHz, boolean oneHz){
                 for(Map.Entry<ItemStat, Double> entry : mMap.entrySet()){
-                    entry.getKey().tick(plugin, player, entry.getValue(), twoHz, oneHz);
+                    entry.getKey().tick(player, entry.getValue(), twoHz, oneHz);
                 }
             }
 
@@ -205,8 +205,8 @@ public class ItemStatManager {
 
         }
 
-        public void tick(Plugin plugin, Player player, boolean twoHz, boolean oneHz){
-            mFinalStats.tick(plugin, player, twoHz, oneHz);
+        public void tick(Player player, boolean twoHz, boolean oneHz){
+            mFinalStats.tick(player, twoHz, oneHz);
         }
     }
 

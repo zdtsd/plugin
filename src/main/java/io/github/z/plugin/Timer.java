@@ -1,5 +1,6 @@
 package io.github.z.plugin;
 
+import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -25,7 +26,8 @@ public class Timer {
         if(fourHz){
             for(Player player : PlayerUtils.getOnlinePlayers()){
                 ItemStatManager.updateStats(player);
-                ItemStatManager.tick(mPlugin, player, twoHz, oneHz);
+                ItemStatManager.tick(player, twoHz, oneHz);
+                AbilityManager.tick(player, twoHz, oneHz);
             }
         }
     }

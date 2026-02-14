@@ -50,6 +50,12 @@ public class AbilityManager {
             }
         }
 
+        mAbilities.put(player, returnSet);
+
         return returnSet;
+    }
+
+    public static void tick(Player player, boolean twoHz, boolean oneHz){
+        abilityManager.mAbilities.get(player).tick(player, twoHz, oneHz);
     }
 }

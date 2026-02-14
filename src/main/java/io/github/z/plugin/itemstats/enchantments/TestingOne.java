@@ -14,7 +14,7 @@ public class TestingOne implements Enchantment {
     }
 
     @Override
-    public void tick(Plugin plugin, Player player, double value, boolean twoHz, boolean oneHz){
+    public void tick(Player player, double value, boolean twoHz, boolean oneHz){
         Bukkit.getLogger().info(getName() + ": " + value);
     }
 }

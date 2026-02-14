@@ -1,5 +1,6 @@
 package io.github.z.plugin.utils;
 
+import io.github.z.plugin.abilities.AbilityManager;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -11,6 +12,7 @@ public class PlayerUtils {
 
     public static void onLogin(Player player){
         onlinePlayers.add(player);
+        AbilityManager.getAbilityManager().updateAbilities(player);
     }
 
     public static void onLogout(Player player){
