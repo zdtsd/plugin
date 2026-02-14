@@ -26,6 +26,10 @@ public abstract class GUI implements InventoryHolder {
         return mInventory;
     }
 
+    protected Player getPlayer(){
+        return mPlayer;
+    }
+
     public GUI(Player player, int size){
         this(player, size,  Component.text("Placeholder Inventory Title"));
     }
@@ -84,6 +88,11 @@ public abstract class GUI implements InventoryHolder {
                 mInventory.setItem(i, button.getItemStack());
             }
         }
+    }
+
+    public void fullRebuild(){
+        setupGUI();
+        buildMenu();
     }
 
 

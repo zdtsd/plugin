@@ -12,4 +12,6 @@ public abstract class Ability {
     public int getLevel(){
         return mLevel;
     }
+
+    public abstract AbilityData<?> getData();
 }

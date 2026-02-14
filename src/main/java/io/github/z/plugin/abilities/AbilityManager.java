@@ -1,12 +1,12 @@
 package io.github.z.plugin.abilities;
 
-import io.github.z.plugin.abilities.swashbuckler.TestingAbility;
+import io.github.z.plugin.abilities.testing.TestingAbilityOne;
+import io.github.z.plugin.abilities.testing.TestingAbilityThree;
+import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Criteria;
 
 import java.util.*;
 
@@ -20,7 +20,9 @@ public class AbilityManager {
         abilityManager = this;
 
         //Add ALL abilities to mAllAbilities.
-        mAllAbilities.add(TestingAbility.DATA);
+        mAllAbilities.add(TestingAbilityOne.DATA);
+        mAllAbilities.add(TestingAbilityTwo.DATA);
+        mAllAbilities.add(TestingAbilityThree.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){

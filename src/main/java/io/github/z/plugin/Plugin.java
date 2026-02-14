@@ -35,7 +35,7 @@ public final class Plugin extends JavaPlugin {
 
         //Set up utils.
         //TODO: Uncomment
-       // mAbilityManager = new AbilityManager();
+        mAbilityManager = new AbilityManager();
         projectileUtils = new ProjectileUtils();
 
         //Register commands

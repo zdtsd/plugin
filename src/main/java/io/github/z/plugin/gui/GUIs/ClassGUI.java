@@ -25,12 +25,19 @@ public class ClassGUI extends GUI {
     @Override
     protected void setupGUI(){
         new GUIButton()
+                .setMaterial(Material.BARRIER)
+                .setName(Component.text("Testing"))
+                .addHandler((clickEvent) -> {
+                    if(clickEvent.getWhoClicked() instanceof Player player){
+                        new TestingClassGUI(player, TestingClassGUI.GUI_SIZE);
+                    }
+                })
+                .addToGUI(this, 0);
+        new GUIButton()
                 .setMaterial(Material.SHIELD)
                 .setName(Component.text("Swashbuckler"))
                 .addHandler((clickEvent) -> {
-                    if(clickEvent.getWhoClicked() instanceof Player player){
-                        new SwashbucklerClassGUI(player, SwashbucklerClassGUI.GUI_SIZE);
-                    }
+                    Bukkit.getLogger().info("Swashbuckler selected!");
                 })
                 .addToGUI(this, 2);
         new GUIButton()
