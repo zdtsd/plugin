@@ -37,7 +37,9 @@ public class ClassGUI extends GUI {
                 .setMaterial(Material.SHIELD)
                 .setName(Component.text("Swashbuckler"))
                 .addHandler((clickEvent) -> {
-                    Bukkit.getLogger().info("Swashbuckler selected!");
+                    if(clickEvent.getWhoClicked() instanceof Player player){
+                        new SwashbucklerClassGUI(player, SwashbucklerClassGUI.GUI_SIZE);
+                    }
                 })
                 .addToGUI(this, 2);
         new GUIButton()

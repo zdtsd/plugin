@@ -64,6 +64,11 @@
           <url>https://repo.codemc.io/repository/maven-public/</url>
           <layout>default</layout>
       </repository>
+      <!-- TAB Plugin -->
+      <repository>
+          <id>jitpack.io</id>
+          <url>https://jitpack.io</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -83,6 +88,12 @@
           <groupId>dev.jorel</groupId>
           <artifactId>commandapi-paper-core</artifactId>
           <version>11.1.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.github.NEZNAMY</groupId>
+          <artifactId>TAB-API</artifactId>
+          <version>5.5.0</version>
           <scope>provided</scope>
       </dependency>
   </dependencies>

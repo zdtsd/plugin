@@ -1,5 +1,6 @@
 package io.github.z.plugin.listeners;
 
+import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.ProjectileUtils;
@@ -39,9 +40,11 @@ public class DamageListener implements Listener {
 
         if(source instanceof Player player){
             ItemStatManager.onDamage(player, event);
+            AbilityManager.onDamage(player, event);
         }
         if(damagee instanceof Player player){
             ItemStatManager.onHurt(player, event);
+            AbilityManager.onHurt(player, event);
         }
     }
 }

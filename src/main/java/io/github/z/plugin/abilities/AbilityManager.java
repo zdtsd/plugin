@@ -1,12 +1,16 @@
 package io.github.z.plugin.abilities;
 
+import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
+import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import java.util.*;
 
@@ -23,6 +27,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityOne.DATA);
         mAllAbilities.add(TestingAbilityTwo.DATA);
         mAllAbilities.add(TestingAbilityThree.DATA);
+        mAllAbilities.add(SwashbucklerStance.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
@@ -56,6 +61,42 @@ public class AbilityManager {
     }
 
     public static void tick(Player player, boolean twoHz, boolean oneHz){
-        abilityManager.mAbilities.get(player).tick(player, twoHz, oneHz);
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.tick(player, twoHz, oneHz);
+        }
+    }
+
+    public static void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(event.getPlayer()).getAbilities()){
+            ability.playerSwapHandItemsEvent(event);
+        }
+    }
+
+    public static void onDamage(Player player, DamageEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onDamage(event);
+        }
+    }
+    public static void onHurt(Player player, DamageEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onHurt(event);
+        }
+    }
+
+    public static Ability getAbility(Player player, Class<Ability> abilityClass){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            if(abilityClass.isInstance(ability)){
+                return ability;
+            }
+        }
+        return null;
+    }
+
+    public List<String> getSidebarLines(Player player){
+        List<String> sidebarLines = new ArrayList<>();
+        for(Ability ab : mAbilities.get(player).getAbilities()){
+            sidebarLines.addAll(ab.getSidebarLines());
+        }
+        return sidebarLines;
     }
 }

@@ -2,7 +2,10 @@ package io.github.z.plugin;
 
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.sidebar.SidebarManager;
 import io.github.z.plugin.utils.PlayerUtils;
+import io.github.z.plugin.utils.TABUtils;
+import me.neznamy.tab.api.TabPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -28,6 +31,9 @@ public class Timer {
                 ItemStatManager.updateStats(player);
                 ItemStatManager.tick(player, twoHz, oneHz);
                 AbilityManager.tick(player, twoHz, oneHz);
+            }
+            for(TabPlayer tabPlayer : TABUtils.getTABPlayers()){
+                SidebarManager.getInstance().tick(tabPlayer);
             }
         }
     }

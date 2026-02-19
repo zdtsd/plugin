@@ -12,7 +12,7 @@ public class TestingAbilityTwo extends Ability {
             .displayMaterial(Material.BARRIER);
 
     public TestingAbilityTwo(Player player) {
-
+        super(player);
     }
     @Override
     public AbilityData getData() {
