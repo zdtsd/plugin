@@ -1,10 +1,12 @@
 package io.github.z.plugin.listeners;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.ProjectileUtils;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -13,8 +15,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerListener implements Listener {
 
@@ -52,5 +59,33 @@ public class PlayerListener implements Listener {
         AbilityManager.playerSwapHandItemsEvent(event);
         event.setCancelled(true);
 
+    }
+
+    @EventHandler
+    public void playerFlyEvent(PlayerToggleFlightEvent event){
+        if(event.getPlayer().getGameMode() != GameMode.CREATIVE){
+            event.setCancelled(true);
+        }
+        ItemStatManager.onDoubleJump(event.getPlayer(), event);
+    }
+
+    private Map<Player, Boolean> playerGroundedMap = new HashMap<>();
+    @EventHandler
+    public void playerMoveEvent(PlayerMoveEvent event){
+        Boolean wasGrounded = playerGroundedMap.putIfAbsent(event.getPlayer(), false);
+        Boolean isGrounded = event.getPlayer().isOnGround();
+        if(Boolean.FALSE.equals(wasGrounded) && isGrounded){
+            playerGroundedMap.put(event.getPlayer(), true);
+            PlayerLandsOnGroundEvent landingEvent = new PlayerLandsOnGroundEvent(event.getPlayer());
+            landingEvent.callEvent();
+        }
+        else if(Boolean.TRUE.equals(wasGrounded) && !isGrounded){
+            playerGroundedMap.put((event.getPlayer()), false);
+        }
+    }
+
+    @EventHandler
+    public void playerLandsOnGroundEvent(PlayerLandsOnGroundEvent event){
+        ItemStatManager.onPlayerLandsOnGround(event.getPlayer(), event);
     }
 }

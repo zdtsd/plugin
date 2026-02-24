@@ -9,6 +9,7 @@ import io.github.z.plugin.listeners.GUIListener;
 import io.github.z.plugin.listeners.LoginLogoutListener;
 import io.github.z.plugin.listeners.PlayerListener;
 import io.github.z.plugin.sidebar.SidebarManager;
+import io.github.z.plugin.utils.DoubleJumpManager;
 import io.github.z.plugin.utils.ProjectileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public final class Plugin extends JavaPlugin {
     private static ProjectileUtils projectileUtils;
     private static AbilityManager mAbilityManager;
     private static SidebarManager mSidebarManager;
+    private static DoubleJumpManager mDoubleJumpManager;
     private static Plugin plugin;
 
     public static Plugin getPlugin(){
@@ -40,6 +42,7 @@ public final class Plugin extends JavaPlugin {
         mAbilityManager = new AbilityManager();
         projectileUtils = new ProjectileUtils();
         mSidebarManager = new SidebarManager();
+        mDoubleJumpManager = new DoubleJumpManager();
 
         //Register commands
 

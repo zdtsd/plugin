@@ -23,6 +23,7 @@ public enum EnchantmentType {
     FALL_PROTECTION(new FeatherFalling(), "Feather Falling", true, false),
     FIRE_PROTECTION(new FireProtection(), "Fire Protection", true, false),
     BLAST_PROTECTION(new BlastProtection(), "Blast Protection", true, false),
+    AGILITY(new Agility(), "Agility", false, false),
 
     //Vanilla Enchantments
     CURSE_OF_VANISHING(Enchantment.VANISHING_CURSE, "Curse of Vanishing", false, true);

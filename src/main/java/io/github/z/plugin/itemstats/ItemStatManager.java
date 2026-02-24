@@ -1,11 +1,13 @@
 package io.github.z.plugin.itemstats;
 
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -93,13 +95,21 @@ public class ItemStatManager {
             }
         }
     }
+    public static void onDoubleJump(Player player, PlayerToggleFlightEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onDoubleJump(player, event, entry.getValue());
+            }
+        }
+    }
 
-
-
-
-
-
-
+    public static void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onPlayerLandsOnGround(player, event, entry.getValue());
+            }
+        }
+    }
 
 
 
