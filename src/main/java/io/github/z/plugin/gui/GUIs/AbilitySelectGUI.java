@@ -29,7 +29,7 @@ public abstract class AbilitySelectGUI extends GUI {
         int level = AbilityUtils.getAbilityLevel(getPlayer(), ability);
 
         new GUIButton()
-                .setMaterial(level == 0 ? Material.STICK : Material.LIGHT)
+                .setMaterial(level == 0 ? Material.BARRIER : ability.getDisplayItem())
                 .setName(Component.text(ability.getScoreboardID()))
                 .addHandler((clickEvent) -> {
                     int setTo = level == 0 ? 1 : 0;

@@ -79,6 +79,9 @@ public class SwashbucklerStance extends Ability {
     //TESTING, REMOVE THIS
     @Override
     public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
+        if(!event.getPlayer().isSneaking()){
+            return;
+        }
         SwashbucklerStanceType newStance;
         switch(getStance()){
             case NEUTRAL -> newStance = SwashbucklerStanceType.OFFENSIVE;

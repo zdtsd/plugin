@@ -32,7 +32,7 @@ public class Agility implements Enchantment {
             mCanJump.put(player, false);
             Vector jumpDirection = player.getLocation().getDirection();
             Vector jumpVelocity = VectorUtils.clampSlope(jumpDirection, 0.3, 3).normalize().multiply(speed);
-            EntityUtils.addVelocity(player, jumpVelocity);
+            EntityUtils.setVelocity(player, jumpVelocity);
             DoubleJumpManager.removeDoubleJumpToken(player, doubleJumpToken);
         }
     }

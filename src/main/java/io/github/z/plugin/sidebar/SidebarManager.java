@@ -2,13 +2,14 @@ package io.github.z.plugin.sidebar;
 
 import io.github.z.plugin.Plugin;
 import io.github.z.plugin.abilities.AbilityManager;
+import it.unimi.dsi.fastutil.Hash;
 import me.neznamy.tab.api.TabAPI;
 import me.neznamy.tab.api.TabPlayer;
 import me.neznamy.tab.api.scoreboard.Scoreboard;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SidebarManager {
 
@@ -30,10 +31,11 @@ public class SidebarManager {
         renderSidebar(player);
     }
 
+    private boolean flipflop = true;
     private void renderSidebar(TabPlayer player){
+        //TODO: REFACTOR TO FIX SIDEBAR FLICKERING
+        //Get ability lines
         List<String> sidebarLines = new ArrayList<>();
-
-        //Render ability lines
         sidebarLines.addAll(AbilityManager.getAbilityManager().getSidebarLines((Player) player.getPlayer()));
 
         //Show sidebar

@@ -34,23 +34,19 @@ public class DoubleJumpManager {
     public void addDoubleJumpTokenLocal(Player player, String tokenID){
         List<DoubleJumpToken> playerTokens = mJumpTriggerTokens.get(player);
         if(playerTokens == null){
-            Bukkit.getLogger().info("PlayerTokens is null.");
             playerTokens = new ArrayList<>();
             playerTokens.add(new DoubleJumpToken(tokenID));
             mJumpTriggerTokens.put(player, playerTokens);
             player.setAllowFlight(true);
         }
         else{
-            Bukkit.getLogger().info("PlayerTokens is NOT null.");
             //Only add new tokens when necessary.
             for(DoubleJumpToken token : playerTokens){
                 if(Objects.equals(token.getID(), tokenID)){
-                    Bukkit.getLogger().info("Matching token found, not adding new token to list.");
                     return;
                 }
             }
 
-            Bukkit.getLogger().info("Adding token");
             playerTokens.add(new DoubleJumpToken(tokenID));
         }
     }

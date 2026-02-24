@@ -16,6 +16,10 @@ public class AbilityData<T extends Ability> {
     private Material mDisplayItem = null;
     private double mPriorityAmount = 1000;
 
+    //Cooldown ability only
+    private int mCooldown = 0 * 20;
+    private int mMaxCharges = 1;
+
 
     public AbilityData(Class<T> abilityClass, String name, Function<Player, T> constructor){
         mAbility = abilityClass;
@@ -39,15 +43,31 @@ public class AbilityData<T extends Ability> {
         return this;
     }
 
+    public AbilityData<T> cooldown(int cooldown){
+        mCooldown = cooldown;
+        return this;
+    }
+    public AbilityData<T> maxCharges(int charges){
+        mMaxCharges = charges;
+        return this;
+    }
 
     //Getters
     public String getScoreboardID(){
         return mScoreboardID;
     }
-
     public Ability getNewInstance(Player player){
         return mConstructor.apply(player);
     }
-
+    public String getName(){
+        return mName;
+    }
+    public Material getDisplayItem(){return mDisplayItem;}
+    public int getCooldown(){
+        return mCooldown;
+    }
+    public int getMaxCharges(){
+        return mMaxCharges;
+    }
 
 }

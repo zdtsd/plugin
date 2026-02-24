@@ -14,4 +14,12 @@ public class EntityUtils {
     public static void addForwardsVelocity(Entity entity, double speed){
         addVelocity(entity, entity.getLocation().getDirection().multiply(speed));
     }
+
+    public static void setVelocity(Entity entity, Vector velocity){
+        entity.setVelocity(velocity);
+    }
+
+    public static void setForwardsVelocity(Entity entity, double speed){
+        setVelocity(entity, entity.getLocation().getDirection().multiply(speed));
+    }
 }

@@ -1,5 +1,6 @@
 package io.github.z.plugin.abilities;
 
+import io.github.z.plugin.abilities.swashbuckler.SwashbucklerReposition;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
@@ -28,6 +29,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityTwo.DATA);
         mAllAbilities.add(TestingAbilityThree.DATA);
         mAllAbilities.add(SwashbucklerStance.DATA);
+        mAllAbilities.add(SwashbucklerReposition.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
@@ -63,6 +65,9 @@ public class AbilityManager {
     public static void tick(Player player, boolean twoHz, boolean oneHz){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.tick(player, twoHz, oneHz);
+            if(ability instanceof CooldownAbility cdAbility){
+                cdAbility.tickCooldown();
+            }
         }
     }
 
@@ -83,7 +88,7 @@ public class AbilityManager {
         }
     }
 
-    public static Ability getAbility(Player player, Class<Ability> abilityClass){
+    public static Ability getAbility(Player player, Class<?> abilityClass){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             if(abilityClass.isInstance(ability)){
                 return ability;
