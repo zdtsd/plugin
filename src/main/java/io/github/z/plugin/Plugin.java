@@ -8,6 +8,7 @@ import io.github.z.plugin.listeners.DamageListener;
 import io.github.z.plugin.listeners.GUIListener;
 import io.github.z.plugin.listeners.LoginLogoutListener;
 import io.github.z.plugin.listeners.PlayerListener;
+import io.github.z.plugin.protocollib.ProtocolLibManager;
 import io.github.z.plugin.sidebar.SidebarManager;
 import io.github.z.plugin.utils.DoubleJumpManager;
 import io.github.z.plugin.utils.ProjectileUtils;
@@ -16,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Plugin extends JavaPlugin {
 
+    private static ProtocolLibManager mProtocolLibManager;
     private static ProjectileUtils projectileUtils;
     private static AbilityManager mAbilityManager;
     private static SidebarManager mSidebarManager;
@@ -39,6 +41,7 @@ public final class Plugin extends JavaPlugin {
 
         //Set up utils.
         //TODO: Uncomment
+        mProtocolLibManager = new ProtocolLibManager();
         mAbilityManager = new AbilityManager();
         projectileUtils = new ProjectileUtils();
         mSidebarManager = new SidebarManager();

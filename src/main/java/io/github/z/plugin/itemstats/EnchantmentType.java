@@ -56,9 +56,7 @@ public enum EnchantmentType {
 
     public io.github.z.plugin.itemstats.Enchantment getItemStat(){return mStat;}
     public Enchantment getVanillaStat(){return mVanillaStat;}
-    public String getName(){
-        return mName;
-    }
+    public String getName(){return mName;}
     public String getDisplayName(){return mDisplayName;};
     public boolean getIsCurse(){return mIsCurse;}
     public boolean getHasLevels(){return mHasLevels;}

@@ -69,6 +69,11 @@
           <id>jitpack.io</id>
           <url>https://jitpack.io</url>
       </repository>
+      <!-- BKCommonLib Plugin -->
+      <repository>
+          <id>MG-Dev Jenkins CI Maven Repository</id>
+          <url>https://ci.mg-dev.eu/plugin/repository/everything</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -96,5 +101,12 @@
           <version>5.5.0</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+          <groupId>com.bergerkiller.bukkit</groupId>
+          <artifactId>BKCommonLib</artifactId>
+          <version>1.20.4-v1</version>
+          <scope>provided</scope>
+      </dependency>
+
   </dependencies>
 </project>
