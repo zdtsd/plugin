@@ -111,6 +111,14 @@ public class ItemStatManager {
         }
     }
 
+    public static void onPlayerDropKey(Player player){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onPlayerDropKeyEvent(player, entry.getValue());
+            }
+        }
+    }
+
 
 
     public static class PlayerItemStats{

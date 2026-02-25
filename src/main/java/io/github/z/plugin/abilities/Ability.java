@@ -38,6 +38,10 @@ public abstract class Ability {
 
     }
 
+    public void onDropKey(){
+
+    }
+
     public List<String> getSidebarLines(){
         return new ArrayList<>();
     }

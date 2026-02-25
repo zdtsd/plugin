@@ -74,4 +74,8 @@ public interface GenericPlayerModifier {
     default void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event, double level){
 
     }
+
+    default void onPlayerDropKeyEvent(Player player, double level){
+
+    }
 }

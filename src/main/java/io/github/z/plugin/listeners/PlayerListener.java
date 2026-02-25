@@ -15,15 +15,44 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerListener implements Listener {
+
+    private static List<Player> playerDropKeyBuffer = new ArrayList<>();
+
+    //WARNING: Asynchronous packet function, do not add API calls.
+    public static void registerItemDrop(Player player){
+        if(playerDropKeyBuffer.contains(player)){
+            return;
+        }
+        playerDropKeyBuffer.add(player);
+    }
+
+    @EventHandler
+    public void playerInteractEvent(PlayerInteractEvent event){
+        //Return if player pressed the drop key.
+        if(playerDropKeyBuffer.contains(event.getPlayer())){
+            playerDropKeyBuffer.remove(event.getPlayer());
+            playerPressDropKeyEvent(event.getPlayer());
+            return;
+        }
+    }
+
+    //Note: Not actually an event, called in PlayerInteractEvent
+    private void playerPressDropKeyEvent(Player player){
+        ItemStatManager.onPlayerDropKey(player);
+        AbilityManager.onDropKey(player);
+    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void playerProjLaunchEvent(ProjectileLaunchEvent event){

@@ -88,6 +88,12 @@ public class AbilityManager {
         }
     }
 
+    public static void onDropKey(Player player){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onDropKey();
+        }
+    }
+
     public static Ability getAbility(Player player, Class<?> abilityClass){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             if(abilityClass.isInstance(ability)){

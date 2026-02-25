@@ -4,6 +4,7 @@ import com.bergerkiller.generated.net.minecraft.network.protocol.game.PacketPlay
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import io.github.z.plugin.listeners.PlayerListener;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -19,9 +20,13 @@ public class DropKeyPacketListener extends PacketAdapter {
         PacketPlayInBlockDigHandle.EnumPlayerDigTypeHandle digTypeHandle = packet.getDigType();
         if(PacketPlayInBlockDigHandle.EnumPlayerDigTypeHandle.DROP_ALL_ITEMS.equals(digTypeHandle)
                 || PacketPlayInBlockDigHandle.EnumPlayerDigTypeHandle.DROP_ITEM.equals(digTypeHandle)){
+            //Cancel drop
             event.setCancelled(true);
             Player player = event.getPlayer();
             player.updateInventory();
+
+            //Register drop (should be thread safe?)
+            PlayerListener.registerItemDrop(player);
         }
     }
 }

@@ -37,8 +37,8 @@ public class SwashbucklerReposition extends CooldownAbility {
     }
 
     @Override
-    public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
-        if(event.getPlayer().isSneaking()){return;}
+    public void onDropKey() {
+        if(mPlayer.isSneaking()){return;}
         if(!isCastable()){return;}
         spendCharge();
 
@@ -49,7 +49,7 @@ public class SwashbucklerReposition extends CooldownAbility {
         else if(stance.getStance() == SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE){
             stance.setStance(SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE);
         }
-        EntityUtils.setForwardsVelocity(event.getPlayer(), dashSpeed);
+        EntityUtils.setForwardsVelocity(mPlayer, dashSpeed);
 
     }
 }
