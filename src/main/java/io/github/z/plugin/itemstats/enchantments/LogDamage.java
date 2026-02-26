@@ -3,7 +3,7 @@ package io.github.z.plugin.itemstats.enchantments;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Enchantment;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 public class LogDamage implements Enchantment {
     @Override
@@ -12,8 +12,8 @@ public class LogDamage implements Enchantment {
     }
 
     @Override
-    public void onDamage(Player player, DamageEvent event, double level){
-        Bukkit.getLogger().info("Player " + player.getName() + " dealt " + event.getDamage() + " damage.");
+    public void onDamage(Entity entity, DamageEvent event, double level){
+        Bukkit.getLogger().info("Player " + entity.getName() + " dealt " + event.getDamage() + " damage.");
     }
 
     @Override

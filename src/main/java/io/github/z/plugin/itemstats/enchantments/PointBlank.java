@@ -2,8 +2,7 @@ package io.github.z.plugin.itemstats.enchantments;
 
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Enchantment;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 public class PointBlank implements Enchantment {
 
@@ -15,8 +14,8 @@ public class PointBlank implements Enchantment {
     }
 
     @Override
-    public void onDamage(Player player, DamageEvent event, double level){
-        if(event.isProjectile() && player.getLocation().distance(event.getDamagee().getLocation()) <= maxRange){
+    public void onDamage(Entity entity, DamageEvent event, double level){
+        if(event.isProjectile() && entity.getLocation().distance(event.getDamagee().getLocation()) <= maxRange){
             event.addBaseDamage(level * boostPerLevel);
         }
     }

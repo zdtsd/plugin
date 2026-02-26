@@ -2,7 +2,7 @@ package io.github.z.plugin.itemstats.attributes;
 
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Attribute;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 public class MeleeDamagePercent implements Attribute {
     @Override
@@ -11,7 +11,7 @@ public class MeleeDamagePercent implements Attribute {
     }
 
     @Override
-    public void onDamage(Player player, DamageEvent event, double level){
+    public void onDamage(Entity entity, DamageEvent event, double level){
         if(event.isMelee()){
             event.addGearMultiplier(1 + level / 100);
         }

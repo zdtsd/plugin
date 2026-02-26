@@ -10,7 +10,8 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public interface GenericPlayerModifier {
+public interface GenericPlayerModifier extends GenericEntityModifier{
+    //TODO: Migrate to GenericEntityModifier.
 
     /*
    Return the name of the modifier.
@@ -40,32 +41,7 @@ public interface GenericPlayerModifier {
 	@param oneHz: true every 20 ticks
      */
 
-    default void tick(Player player, double value, boolean twoHz, boolean oneHz){
 
-    }
-
-    default void onDamage(Player player, DamageEvent event, double level){
-
-    }
-    default void onHurt(Player player, DamageEvent event, double level){
-
-    }
-
-    default void onProjectileLaunch(Player player, ProjectileLaunchEvent event, double level){
-
-    }
-
-    default void onBowShoot(Player player, EntityShootBowEvent event, double level){
-
-    }
-
-    default void onCrossbowShoot(Player player, EntityShootBowEvent event, double level){
-
-    }
-
-    default void onCrossbowLoad(Player player, EntityLoadCrossbowEvent event, double level){
-
-    }
 
     default void onDoubleJump(Player player, PlayerToggleFlightEvent event, double level){
 

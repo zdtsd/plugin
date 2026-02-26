@@ -1,10 +1,8 @@
 package io.github.z.plugin.itemstats.enchantments;
 
 import io.github.z.plugin.itemstats.Enchantment;
-import io.github.z.plugin.itemstats.ItemStat;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.entity.Entity;
 
 public class TestingOne implements Enchantment {
 
@@ -14,7 +12,7 @@ public class TestingOne implements Enchantment {
     }
 
     @Override
-    public void tick(Player player, double value, boolean twoHz, boolean oneHz){
+    public void tick(Entity entity, double value, boolean twoHz, boolean oneHz){
         Bukkit.getLogger().info(getName() + ": " + value);
     }
 }

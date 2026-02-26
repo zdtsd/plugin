@@ -2,7 +2,7 @@ package io.github.z.plugin.itemstats.attributes;
 
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Attribute;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 public class Defense implements Attribute {
 
@@ -15,7 +15,7 @@ public class Defense implements Attribute {
 
 
     @Override
-    public void onHurt(Player player, DamageEvent event, double level){
+    public void onHurt(Entity entity, DamageEvent event, double level){
         event.addDamageReduction(Math.pow(defensePerLevel, level));
     }
 }

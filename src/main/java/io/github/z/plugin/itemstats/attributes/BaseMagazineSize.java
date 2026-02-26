@@ -5,6 +5,7 @@ import io.github.z.plugin.itemstats.ItemStatUtils;
 import io.github.z.plugin.utils.ProjectileUtils;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -25,15 +26,15 @@ public class BaseMagazineSize implements Attribute {
     }
 
     @Override
-    public void onCrossbowLoad(Player player, EntityLoadCrossbowEvent event, double level) {
+    public void onCrossbowLoad(Entity entity, EntityLoadCrossbowEvent event, double level) {
         ItemStack crossbow = event.getCrossbow();
         ItemStatUtils.setItemData(crossbow, ProjectileUtils.crossbowAmmoNBTTag, level);
     }
 
     @Override
-    public void onCrossbowShoot(Player player, EntityShootBowEvent event, double level) {
+    public void onCrossbowShoot(Entity entity, EntityShootBowEvent event, double level) {
         ItemStack crossbow = event.getBow();
-        if(crossbow.getItemMeta() instanceof CrossbowMeta meta){
+        if(crossbow.getItemMeta() instanceof CrossbowMeta meta && entity instanceof Player player){
             double ammoCount = ItemStatUtils.getItemData(crossbow, ProjectileUtils.crossbowAmmoNBTTag) - 1;
             if(ammoCount > 0){
                 ItemStack arrow = new ItemStack(Material.ARROW);
