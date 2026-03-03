@@ -2,6 +2,7 @@ package io.github.z.plugin.sidebar;
 
 import io.github.z.plugin.Plugin;
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.effects.EffectManager;
 import it.unimi.dsi.fastutil.Hash;
 import me.neznamy.tab.api.TabAPI;
 import me.neznamy.tab.api.TabPlayer;
@@ -37,6 +38,7 @@ public class SidebarManager {
         //Get ability lines
         List<String> sidebarLines = new ArrayList<>();
         sidebarLines.addAll(AbilityManager.getAbilityManager().getSidebarLines((Player) player.getPlayer()));
+        sidebarLines.addAll(EffectManager.getEffectManager().getSidebarLines((Player) player.getPlayer()));
 
         //Show sidebar
         Scoreboard sidebar = TabAPI.getInstance().getScoreboardManager().createScoreboard(sidebarName, sidebarTitle, sidebarLines);

@@ -1,7 +1,52 @@
 package io.github.z.plugin.effects;
 
-import io.github.z.plugin.GenericPlayerModifier;
+import io.github.z.plugin.GenericEntityModifier;
+import org.jetbrains.annotations.NotNull;
 
-public interface Effect extends GenericPlayerModifier {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Effect implements GenericEntityModifier, Comparable<Effect> {
+    private int mDuration = 0;
+    private int mStrength = 1;
+
+    public Effect(int duration, int strength){
+        mDuration = duration;
+        mStrength = strength;
+    }
+
+    public void reduceDuration(int ticks){
+        mDuration -= ticks;
+    }
+
+    public int getDuration(){
+        return mDuration;
+    }
+
+    public int getStrength(){
+        return mStrength;
+    }
+
+    @Override
+    public int compareTo(@NotNull Effect o) {
+        if(o.getStrength() > getStrength()){
+            return -1;
+        }
+        else if(getStrength() > o.getStrength()){
+            return 1;
+        }
+        else if(o.getDuration() > getDuration()){
+            return -1;
+        }
+        else if(getDuration() > o.getDuration()){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    List<String> getSidebarLines(){return new ArrayList<>();}
+
 
 }

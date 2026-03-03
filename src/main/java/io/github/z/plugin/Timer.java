@@ -1,6 +1,7 @@
 package io.github.z.plugin;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.sidebar.SidebarManager;
 import io.github.z.plugin.utils.PlayerUtils;
@@ -35,6 +36,7 @@ public class Timer {
             for(TabPlayer tabPlayer : TABUtils.getTABPlayers()){
                 SidebarManager.getInstance().tick(tabPlayer);
             }
+            EffectManager.getEffectManager().tick();
         }
     }
 }

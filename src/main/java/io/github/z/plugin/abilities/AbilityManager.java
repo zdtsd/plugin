@@ -5,6 +5,7 @@ import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
+import io.github.z.plugin.abilities.testing.TestingAbilityWeakness;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
@@ -28,6 +29,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityOne.DATA);
         mAllAbilities.add(TestingAbilityTwo.DATA);
         mAllAbilities.add(TestingAbilityThree.DATA);
+        mAllAbilities.add(TestingAbilityWeakness.DATA);
         mAllAbilities.add(SwashbucklerStance.DATA);
         mAllAbilities.add(SwashbucklerReposition.DATA);
 

@@ -13,33 +13,6 @@ import org.bukkit.plugin.Plugin;
 public interface GenericPlayerModifier extends GenericEntityModifier{
     //TODO: Migrate to GenericEntityModifier.
 
-    /*
-   Return the name of the modifier.
-    */
-    String getName();
-
-
-    /*
-    Returns the priority order for event handling, with lower values handled first.
-    Stats which must run first are around -1000.
-    Default is 1000.
-    Base stats are -100.
-    Stats with a specific order are 0-100.
-    Stats which read final damage values are around 2000
-    Stats which must run last are around 10000.
-     */
-    default double getPriorityAmount() {
-        return 1000;
-    }
-
-    /*
-    Runs every 5 ticks.
-    @param plugin: the main Plugin.
-	@param player: the Player running the action
-	@param value: the value of ItemStat possessed by the Player
-	@param twoHz: true every 10 ticks
-	@param oneHz: true every 20 ticks
-     */
 
 
 

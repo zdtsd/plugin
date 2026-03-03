@@ -54,35 +54,6 @@ public class PlayerListener implements Listener {
         AbilityManager.onDropKey(player);
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void playerProjLaunchEvent(ProjectileLaunchEvent event){
-        if(event.getEntity().getShooter() instanceof Player player){
-            ItemStatManager.onProjectileLaunch(player, event);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void playerShootBowEvent(EntityShootBowEvent event){
-        if(event.getEntity() instanceof Player player){
-            ProjectileUtils.setForce((Projectile) event.getProjectile(), event.getForce());
-            ItemStatManager.onBowShoot(player, event);
-
-            //Handle crossbow shot events
-            ItemStack bowShot = event.getBow();
-            if(bowShot != null && bowShot.getType() == Material.CROSSBOW){
-                ItemStatManager.onCrossbowShoot(player, event);
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void playerLoadCrossbowEvent(EntityLoadCrossbowEvent event){
-        if(event.getEntity() instanceof Player player){
-            ItemStatManager.onCrossbowLoad(player, event);
-        }
-    }
-
-
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
         AbilityManager.playerSwapHandItemsEvent(event);
