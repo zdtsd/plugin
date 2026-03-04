@@ -9,21 +9,22 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class EffectManager {
+
     private class EffectSet{
         //mEffects stored lists of effects under string keys that indicate the source of the ability. In each namespace, only the highest
         //level of each class of effect is considered.
-        private final Map<String, List<Effect>> mEffects = new HashMap<>();
+        private final Map<String, PriorityQueue<Effect>> mEffects = new HashMap<>();
         private List<Effect> mActiveEffects = new ArrayList<>();
         private final Entity mEntity;
+
 
         public EffectSet(Entity entity){
             mEntity = entity;
         }
 
         public void addEffect(String originName, Effect effect){
-            List<Effect> currentEffects = getOrCreateNamespace(originName);
+            PriorityQueue<Effect> currentEffects = getOrCreateNamespace(originName);
             currentEffects.add(effect);
-            currentEffects.sort(Effect::compareTo);
             mEffects.put(originName, currentEffects);
             updateActiveEffectsList();
         }
@@ -34,28 +35,25 @@ public class EffectManager {
 
         private void updateActiveEffectsList(){
             mActiveEffects = new ArrayList<>();
-            for(List<Effect> effects : mEffects.values()){
+            for(PriorityQueue<Effect> effects : mEffects.values()){
                 if(!effects.isEmpty()){
-                    mActiveEffects.add(effects.getLast());
+                    mActiveEffects.add(effects.peek());
                 }
             }
             mActiveEffects.sort(Comparator.comparingDouble(GenericEntityModifier::getPriorityAmount));
         }
 
-        public Effect getActiveEffect(String name){
-            return mEffects.get(name) != null ? mEffects.get(name).getLast() : null;
+        public Effect getActiveEffect(String originName){
+            return mEffects.get(originName) != null ? mEffects.get(originName).peek(): null;
         }
 
         public List<Effect> getActiveEffects(){
             return mActiveEffects;
         }
 
-        private void sortNamespace(){
 
-        }
-
-        private List<Effect> getOrCreateNamespace(String name){
-            return mEffects.containsKey(name) ? mEffects.get(name) : new ArrayList<>();
+        private PriorityQueue<Effect> getOrCreateNamespace(String originName){
+            return mEffects.containsKey(originName) ? mEffects.get(originName) : new PriorityQueue<>(Effect::compareTo);
         }
 
         public List<String> getSidebarLines(){
@@ -76,22 +74,18 @@ public class EffectManager {
             boolean removedActiveEffect = false;
             //Handle duration ticks.
             for(String s : mEffects.keySet()){
-                List<Effect> effects = mEffects.get(s);
+                PriorityQueue<Effect> effects = mEffects.get(s);
                 for(Effect effect : effects){
                     effect.reduceDuration(5);
                 }
-                while(!effects.isEmpty() && effects.getLast().getDuration() <= 0){
-                    effects.removeLast();
-                    removedActiveEffect = true;
-                }
+                effects.removeIf((effect) -> effect.getDuration() <= 0);
+                updateActiveEffectsList();
                 if(effects.isEmpty()){
                     mEffects.remove(s);
                 }
             }
-            if(removedActiveEffect){
-                updateActiveEffectsList();
-            }
         }
+
     }
 
 

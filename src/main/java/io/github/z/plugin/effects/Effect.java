@@ -30,16 +30,16 @@ public abstract class Effect implements GenericEntityModifier, Comparable<Effect
     @Override
     public int compareTo(@NotNull Effect o) {
         if(o.getStrength() > getStrength()){
-            return -1;
+            return 1;
         }
         else if(getStrength() > o.getStrength()){
-            return 1;
-        }
-        else if(o.getDuration() > getDuration()){
             return -1;
         }
-        else if(getDuration() > o.getDuration()){
+        else if(o.getDuration() > getDuration()){
             return 1;
+        }
+        else if(getDuration() > o.getDuration()){
+            return -1;
         }
         else{
             return 0;
