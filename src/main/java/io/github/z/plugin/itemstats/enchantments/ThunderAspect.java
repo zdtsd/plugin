@@ -11,7 +11,7 @@ import java.util.Random;
 public class ThunderAspect implements Enchantment {
 
     private static final double oddsPerLevel = 0.2;
-    private static int duration = 5 * 20;
+    private static int duration = 1 * 20;
     private static int stunLevel = 1;
     @Override
     public String getName() {
