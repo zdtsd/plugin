@@ -1,5 +1,6 @@
 package io.github.z.plugin.utils;
 
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -8,7 +9,6 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-import javax.xml.stream.Location;
 
 public class EntityUtils {
 
@@ -49,5 +49,9 @@ public class EntityUtils {
                 }
             }
         }
+    }
+
+    public static Location getEntityCenter(Entity entity){
+        return new Location(entity.getWorld(), entity.getBoundingBox().getCenterX(), entity.getBoundingBox().getCenterY(), entity.getBoundingBox().getCenterZ());
     }
 }

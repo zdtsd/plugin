@@ -240,6 +240,11 @@ public class DamageEvent extends Event implements Cancellable {
     }
     public boolean isType(DamageType type) {return mMetadata.mType == type;}
 
+    public boolean doesDamageTriggerAspect(){
+        DamageEvent.DamageType type = mMetadata.getType();
+        return (type == DamageType.MELEE_ATTACK) || (type == DamageType.PROJ_ATTACK);
+    }
+
     public DamageType getType(){
         return mMetadata.mType;
     }

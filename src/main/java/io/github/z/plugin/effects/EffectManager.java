@@ -79,8 +79,6 @@ public class EffectManager {
         //4Hz
         public void tick(){
             //TODO: Handle tick effects.
-
-            boolean removedActiveEffect = false;
             //Handle duration ticks.
             for(String s : mEffects.keySet()){
                 PriorityQueue<Effect> effects = mEffects.get(s);
@@ -92,6 +90,9 @@ public class EffectManager {
                 if(effects.peek() != activeEffect){
                     updateActiveEffectsList();
                     activeEffect.onEffectRemove(effects.peek(), mEntity);
+                    if(effects.peek() != null){
+                        effects.peek().onEffectAdd(activeEffect, mEntity);
+                    }
                 }
                 if(effects.isEmpty()){
                     mEffects.remove(s);
