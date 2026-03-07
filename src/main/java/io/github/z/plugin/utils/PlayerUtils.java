@@ -1,6 +1,8 @@
 package io.github.z.plugin.utils;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -13,6 +15,20 @@ public class PlayerUtils {
     public static void onLogin(Player player){
         onlinePlayers.add(player);
         AbilityManager.getAbilityManager().updateAbilities(player);
+
+        //TODO: Only do this if server has reset since player last login.
+        removeAllAttributeModifiers(player);
+    }
+
+    public static void removeAllAttributeModifiers(Player player){
+        for(Attribute attribute : Attribute.values()){
+            if(player.getAttribute(attribute) != null){
+                for(AttributeModifier attributeModifier : player.getAttribute(attribute).getModifiers()){
+                    player.getAttribute(attribute).removeModifier(attributeModifier);
+                }
+            }
+
+        }
     }
 
     public static void onLogout(Player player){

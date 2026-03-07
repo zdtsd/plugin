@@ -3,7 +3,7 @@ package io.github.z.plugin.abilities.testing;
 import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.CooldownAbility;
 import io.github.z.plugin.effects.EffectManager;
-import io.github.z.plugin.effects.WeaknessEffect;
+import io.github.z.plugin.effects.BaseMoveSpeedModifyEffect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -26,7 +26,7 @@ public class TestingAbilityWeakness extends CooldownAbility {
 
     @Override
     public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
-        WeaknessEffect effect = new WeaknessEffect(5 * 20, 5);
+        BaseMoveSpeedModifyEffect effect = new BaseMoveSpeedModifyEffect(5 * 20, -30);
         EffectManager.applyEffect(mPlayer, effect, getData().getName());
     }
 }

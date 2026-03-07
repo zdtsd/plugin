@@ -2,9 +2,9 @@ package io.github.z.plugin.effects;
 
 import io.github.z.plugin.GenericEntityModifier;
 import io.github.z.plugin.events.DamageEvent;
-import io.github.z.plugin.itemstats.ItemStat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -22,15 +22,23 @@ public class EffectManager {
             mEntity = entity;
         }
 
-        public void addEffect(String originName, Effect effect){
+        public void addEffect(@NotNull String originName, @NotNull Effect effect){
             PriorityQueue<Effect> currentEffects = getOrCreateNamespace(originName);
+            Effect oldEffect = currentEffects.peek();
             currentEffects.add(effect);
             mEffects.put(originName, currentEffects);
             updateActiveEffectsList();
+
+
+            if(currentEffects.peek() == effect){
+                effect.onEffectAdd(oldEffect, mEntity);
+            }
         }
 
-        public void removeEffectsByName(String originName){
+        public void removeEffectsByName(@NotNull String originName){
+            getActiveEffect(originName).onEffectRemove(null, mEntity);
             mEffects.remove(originName);
+            updateActiveEffectsList();
         }
 
         private void updateActiveEffectsList(){
@@ -43,6 +51,7 @@ public class EffectManager {
             mActiveEffects.sort(Comparator.comparingDouble(GenericEntityModifier::getPriorityAmount));
         }
 
+        //WARNING: This does not use the ActiveEffects list and therefore CAN be desynced.
         public Effect getActiveEffect(String originName){
             return mEffects.get(originName) != null ? mEffects.get(originName).peek(): null;
         }
@@ -75,11 +84,15 @@ public class EffectManager {
             //Handle duration ticks.
             for(String s : mEffects.keySet()){
                 PriorityQueue<Effect> effects = mEffects.get(s);
+                Effect activeEffect = effects.peek();
                 for(Effect effect : effects){
                     effect.reduceDuration(5);
                 }
                 effects.removeIf((effect) -> effect.getDuration() <= 0);
-                updateActiveEffectsList();
+                if(effects.peek() != activeEffect){
+                    updateActiveEffectsList();
+                    activeEffect.onEffectRemove(effects.peek(), mEntity);
+                }
                 if(effects.isEmpty()){
                     mEffects.remove(s);
                 }

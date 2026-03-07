@@ -1,14 +1,16 @@
 package io.github.z.plugin.effects;
 
 import io.github.z.plugin.GenericEntityModifier;
+import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Refactor to not use GenericEntityModifier
 public abstract class Effect implements GenericEntityModifier, Comparable<Effect> {
-    private int mDuration = 0;
-    private int mStrength = 1;
+    protected int mDuration = 0;
+    protected int mStrength = 1;
 
     public Effect(int duration, int strength){
         mDuration = duration;
@@ -49,4 +51,10 @@ public abstract class Effect implements GenericEntityModifier, Comparable<Effect
     List<String> getSidebarLines(){return new ArrayList<>();}
 
 
+    public void onEffectRemove(Effect newEffect, Entity entity){
+
+    }
+    public void onEffectAdd(Effect oldEffect, Entity entity){
+
+    }
 }

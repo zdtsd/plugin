@@ -1,6 +1,7 @@
 package io.github.z.plugin.effects;
 
 import io.github.z.plugin.events.DamageEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class WeaknessEffect extends Effect {
     @Override
     public List<String> getSidebarLines() {
         List<String> lines = new ArrayList<>();
-        lines.add(getName() + " " + getStrength() + "||" + getDuration());
+        lines.add(getName() + " " + mStrength + "||" + mDuration);
         return lines;
     }
 
@@ -28,5 +29,15 @@ public class WeaknessEffect extends Effect {
     @Override
     public String getName() {
         return "Weakness";
+    }
+
+    @Override
+    public void onEffectRemove(Effect newEffect, Entity entity) {
+        Bukkit.getLogger().info("Weakness removed" + (newEffect == null ? "" : " and replaced by a new effect."));
+    }
+
+    @Override
+    public void onEffectAdd(Effect oldEffect, Entity entity) {
+        Bukkit.getLogger().info("Weakness added" + (oldEffect == null ? "" : " and replaced an old effect."));
     }
 }
