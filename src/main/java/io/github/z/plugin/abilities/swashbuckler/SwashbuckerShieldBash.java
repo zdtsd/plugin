@@ -6,21 +6,16 @@ import io.github.z.plugin.abilities.CooldownAbility;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.effects.StunEffect;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.particles.PointParticleSet;
 import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.EntityUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.util.Vector;
 
 import java.util.Collection;
-import java.util.List;
 
 public class SwashbuckerShieldBash extends CooldownAbility {
     public static AbilityData<SwashbuckerShieldBash> DATA = new AbilityData<>(SwashbuckerShieldBash.class, "Shield Bash", SwashbuckerShieldBash::new)
@@ -66,6 +61,7 @@ public class SwashbuckerShieldBash extends CooldownAbility {
             spendCharge();
 
             mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 0.8f, 0.1f);
+            mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 0.9f, 0.5f);
 
             SwashbucklerStance stance = getOrFetchStance();
             for(Entity entity : entitiesHit){
@@ -73,12 +69,24 @@ public class SwashbuckerShieldBash extends CooldownAbility {
                     EffectManager.applyEffect(entity, new StunEffect(mStunDuration, 1), StunEffect.stunNamespace);
                     DamageUtils.damage(mPlayer, le, new DamageEvent.Metadata(DamageEvent.DamageType.MELEE_SKILL, DATA.getName()),
                             damageDealt, true, false, true);
-                    le.knockback(knockbackDealt, -le.getLocation().getX() + mPlayer.getLocation().getX(),-le.getLocation().getZ() + mPlayer.getLocation().getZ() );
+                    le.knockback(knockbackDealt, -le.getLocation().getX() + mPlayer.getLocation().getX(),-le.getLocation().getZ() + mPlayer.getLocation().getZ());
+                    buildOnHitParticles(le);
                 }
             }
             if(stance.getStance() == SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE){
                 stance.setStance(SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE);
             }
         }
+    }
+
+    private static final Particle mParticleType = Particle.CRIT;
+    private static final int mParticleCount = 30;
+    private static final double mParticleSpeed = 0.3;
+    private void buildOnHitParticles(LivingEntity entity){
+        new PointParticleSet().setParticle(mParticleType)
+                .setCount(mParticleCount)
+                .setExtra(mParticleSpeed)
+                .setLocation(entity.getEyeLocation())
+                .generateParticles();
     }
 }
