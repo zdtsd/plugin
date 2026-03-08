@@ -10,6 +10,8 @@ import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -62,6 +64,8 @@ public class SwashbuckerShieldBash extends CooldownAbility {
             }
 
             spendCharge();
+
+            mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 0.8f, 0.1f);
 
             SwashbucklerStance stance = getOrFetchStance();
             for(Entity entity : entitiesHit){

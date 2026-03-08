@@ -48,10 +48,10 @@ public class DamageListener implements Listener {
             AbilityManager.onHurt(player, event);
         }
         if(source != null){
-            EffectManager.onHurt(source, event);
+            EffectManager.onDamage(source, event);
         }
         if(damagee != null){
-            EffectManager.onDamage(damagee, event);
+            EffectManager.onHurt(damagee, event);
         }
     }
 }
