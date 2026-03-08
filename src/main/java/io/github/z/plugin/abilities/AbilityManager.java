@@ -1,5 +1,6 @@
 package io.github.z.plugin.abilities;
 
+import io.github.z.plugin.abilities.swashbuckler.SwashbuckerShieldBash;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerReposition;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
@@ -12,6 +13,7 @@ import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import java.util.*;
@@ -32,6 +34,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityWeakness.DATA);
         mAllAbilities.add(SwashbucklerStance.DATA);
         mAllAbilities.add(SwashbucklerReposition.DATA);
+        mAllAbilities.add(SwashbuckerShieldBash.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
@@ -93,6 +96,12 @@ public class AbilityManager {
     public static void onDropKey(Player player){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.onDropKey();
+        }
+    }
+
+    public static void onClick(Player player, PlayerInteractEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onClick(event);
         }
     }
 

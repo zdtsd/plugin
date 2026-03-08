@@ -96,16 +96,14 @@ public class DamageEvent extends Event implements Cancellable {
 
     public static class Metadata{
         private DamageType mType;
-        private final @Nullable ItemStatManager.PlayerItemStats mPlayerItemStats;
         private final @Nullable String mSourceName;
 
         public Metadata(DamageType type){
-            this(type, null, null);
+            this(type, null);
         }
-        public Metadata(DamageType type, String sourceName, ItemStatManager.PlayerItemStats playerItemStats) {
+        public Metadata(DamageType type, String sourceName) {
             mType = type;
             mSourceName = sourceName;
-            mPlayerItemStats = playerItemStats;
         }
 
         public DamageType getType() {

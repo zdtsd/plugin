@@ -3,6 +3,7 @@ package io.github.z.plugin.abilities;
 import io.github.z.plugin.GenericPlayerModifier;
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import java.util.ArrayList;
@@ -39,6 +40,10 @@ public abstract class Ability {
     }
 
     public void onDropKey(){
+
+    }
+
+    public void onClick(PlayerInteractEvent event){
 
     }
 

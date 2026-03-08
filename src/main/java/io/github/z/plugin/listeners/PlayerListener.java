@@ -46,6 +46,8 @@ public class PlayerListener implements Listener {
             playerPressDropKeyEvent(event.getPlayer());
             return;
         }
+
+        AbilityManager.onClick(event.getPlayer(), event);
     }
 
     //Note: Not actually an event, called in PlayerInteractEvent

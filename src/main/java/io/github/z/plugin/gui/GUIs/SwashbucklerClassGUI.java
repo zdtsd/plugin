@@ -1,5 +1,6 @@
 package io.github.z.plugin.gui.GUIs;
 
+import io.github.z.plugin.abilities.swashbuckler.SwashbuckerShieldBash;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerReposition;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
@@ -28,6 +29,7 @@ public class SwashbucklerClassGUI extends AbilitySelectGUI {
     protected void setupGUI(){
         createClassAbilityButton(SwashbucklerStance.DATA, 4);
         createClassAbilityButton(SwashbucklerReposition.DATA, 13);
+        createClassAbilityButton(SwashbuckerShieldBash.DATA, 22);
     }
 
 
