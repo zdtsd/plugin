@@ -2,13 +2,19 @@ package io.github.z.plugin.effects;
 
 import com.bergerkiller.bukkit.common.math.Vector3;
 import io.github.z.plugin.Plugin;
+import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attributable;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
@@ -21,6 +27,8 @@ import java.util.List;
 public class StunEffect extends Effect{
 
     public static final String stunNamespace = "Stun";
+    private NamespacedKey key = new NamespacedKey(Plugin.getPlugin(), "StnSpdMod");
+
     public StunVFX vfx = null;
 
     public StunEffect(int duration, int strength) {
@@ -40,8 +48,7 @@ public class StunEffect extends Effect{
         else{
             vfx = new StunVFX(entity);
             if(entity instanceof LivingEntity livingEntity){
-                //TODO: Add a noAI handler that can track all AI removing effects
-                livingEntity.setAI(false);
+                EntityUtils.replaceAttribute(livingEntity, Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(key, -1, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
             }
         }
     }
@@ -51,10 +58,19 @@ public class StunEffect extends Effect{
         if(newEffect == null){
             vfx.clear();
             if(entity instanceof LivingEntity livingEntity){
-                //TODO: Add a noAI handler that can track all AI removing effects
-                livingEntity.setAI(true);
+                EntityUtils.removeAttribute(livingEntity, Attribute.GENERIC_MOVEMENT_SPEED, key);
             }
         }
+    }
+
+    @Override
+    public void onDamage(Entity entity, DamageEvent event, double level) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    public void onProjectileLaunch(Entity entity, ProjectileLaunchEvent event, double level) {
+        event.setCancelled(true);
     }
 
     private class StunVFX{

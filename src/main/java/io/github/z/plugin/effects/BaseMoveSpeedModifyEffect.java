@@ -39,7 +39,6 @@ public class BaseMoveSpeedModifyEffect extends Effect{
 
     @Override
     public void onEffectRemove(Effect newEffect, Entity entity) {
-        Bukkit.getLogger().info("Slowness removed" + (newEffect == null ? "" : " and replaced by a new effect."));
         if(entity instanceof Attributable attributable){
             EntityUtils.removeAttribute(attributable, Attribute.GENERIC_MOVEMENT_SPEED, key);
         }
@@ -47,7 +46,6 @@ public class BaseMoveSpeedModifyEffect extends Effect{
 
     @Override
     public void onEffectAdd(Effect oldEffect, Entity entity) {
-        Bukkit.getLogger().info("Slowness added" + (oldEffect == null ? "" : " and replaced an old effect."));
         if(entity instanceof Attributable attributable){
             EntityUtils.replaceAttribute(attributable, Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(key, (double)mStrength * 0.01, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
         }
