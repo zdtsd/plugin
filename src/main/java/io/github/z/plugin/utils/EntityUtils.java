@@ -30,6 +30,8 @@ public class EntityUtils {
         entity.setVelocity(velocity);
     }
 
+    public static void setVelocityY(Entity entity, double velocityY){entity.setVelocity(entity.getVelocity().setY(velocityY));}
+
     public static void setForwardsVelocity(Entity entity, double speed){
         setVelocity(entity, entity.getLocation().getDirection().multiply(speed));
     }
@@ -61,8 +63,14 @@ public class EntityUtils {
         return new Location(entity.getWorld(), entity.getBoundingBox().getCenterX(), entity.getBoundingBox().getCenterY(), entity.getBoundingBox().getCenterZ());
     }
 
-    public static Collection<Entity> getEntitiesInCone(Location location, double range, double degrees){
+    public static Collection<Entity> getEntitiesInSphere(Location location, double range){
         Collection<Entity> nearbyEntities = location.getNearbyEntities(range, range, range);
+        nearbyEntities.removeIf(entity -> entity.getLocation().distance(location) > range);
+        return nearbyEntities;
+    }
+
+    public static Collection<Entity> getEntitiesInCone(Location location, double range, double degrees){
+        Collection<Entity> nearbyEntities = getEntitiesInSphere(location, range);
         nearbyEntities.removeIf(entity -> {
             for(Vector vector : getEntityBoundingBoxVertices(entity)){
                 if(vector.clone().subtract(location.toVector()).normalize().dot(location.getDirection()) >= Math.cos(degrees / 2)){
@@ -93,4 +101,6 @@ public class EntityUtils {
         vertices.add(entity.getBoundingBox().getCenter());
         return vertices;
     }
+
+
 }

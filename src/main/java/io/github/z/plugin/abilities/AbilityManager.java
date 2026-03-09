@@ -1,6 +1,7 @@
 package io.github.z.plugin.abilities;
 
 import io.github.z.plugin.abilities.swashbuckler.SwashbuckerShieldBash;
+import io.github.z.plugin.abilities.swashbuckler.SwashbucklerBladeDance;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerReposition;
 import io.github.z.plugin.abilities.swashbuckler.SwashbucklerStance;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
@@ -35,6 +36,7 @@ public class AbilityManager {
         mAllAbilities.add(SwashbucklerStance.DATA);
         mAllAbilities.add(SwashbucklerReposition.DATA);
         mAllAbilities.add(SwashbuckerShieldBash.DATA);
+        mAllAbilities.add(SwashbucklerBladeDance.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){

@@ -6,6 +6,8 @@ import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.abilities.CooldownAbility;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
@@ -50,6 +52,6 @@ public class SwashbucklerReposition extends CooldownAbility {
             stance.setStance(SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE);
         }
         EntityUtils.setForwardsVelocity(mPlayer, dashSpeed);
-
+        mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.2f, 0.7f);
     }
 }

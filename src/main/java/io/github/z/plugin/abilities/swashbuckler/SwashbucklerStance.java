@@ -76,23 +76,6 @@ public class SwashbucklerStance extends Ability {
         event.addMultiplicativeModifier(currentStance.mIncomingMult);
     }
 
-    //TESTING, REMOVE THIS
-    @Override
-    public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
-        if(!event.getPlayer().isSneaking()){
-            return;
-        }
-        SwashbucklerStanceType newStance;
-        switch(getStance()){
-            case NEUTRAL -> newStance = SwashbucklerStanceType.OFFENSIVE;
-            case OFFENSIVE -> newStance = SwashbucklerStanceType.DEFENSIVE;
-            case DEFENSIVE -> newStance = SwashbucklerStanceType.MASTERFUL;
-            case MASTERFUL -> newStance = SwashbucklerStanceType.NEUTRAL;
-            default -> newStance = SwashbucklerStanceType.NEUTRAL;
-        }
-        setStance(newStance);
-    }
-
     @Override
     public void tick(Player player, boolean twoHz, boolean oneHz) {
         mRemainingDuration -= 5;
@@ -104,6 +87,7 @@ public class SwashbucklerStance extends Ability {
     }
 
 
+    //TODO: Make getting the stance possible with a static dictionary mapping Players to SwashbucklerStances
     public SwashbucklerStanceType getStance(){
         return currentStance;
     }

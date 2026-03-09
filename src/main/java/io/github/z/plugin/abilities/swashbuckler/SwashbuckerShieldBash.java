@@ -21,7 +21,7 @@ public class SwashbuckerShieldBash extends CooldownAbility {
     public static AbilityData<SwashbuckerShieldBash> DATA = new AbilityData<>(SwashbuckerShieldBash.class, "Shield Bash", SwashbuckerShieldBash::new)
             .scoreboardID("SwshBash")
             .displayMaterial(Material.SHIELD)
-            .cooldown(3 * 20);
+            .cooldown(7 * 20);
 
     SwashbucklerStance playerStance;
     private static final double coneWidthDegrees = Math.toRadians(90), coneRange = 6;
@@ -63,7 +63,12 @@ public class SwashbuckerShieldBash extends CooldownAbility {
             mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 0.8f, 0.1f);
             mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 0.9f, 0.5f);
 
+            //Set stance BEFORE damage to increase damage when switching to Offensive.
             SwashbucklerStance stance = getOrFetchStance();
+            if(stance.getStance() == SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE){
+                stance.setStance(SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE);
+            }
+
             for(Entity entity : entitiesHit){
                 if(entity instanceof LivingEntity le){
                     EffectManager.applyEffect(entity, new StunEffect(mStunDuration, 1), StunEffect.stunNamespace);
@@ -73,9 +78,7 @@ public class SwashbuckerShieldBash extends CooldownAbility {
                     buildOnHitParticles(le);
                 }
             }
-            if(stance.getStance() == SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE){
-                stance.setStance(SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE);
-            }
+
         }
     }
 

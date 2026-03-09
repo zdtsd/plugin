@@ -80,6 +80,7 @@ public class EffectManager {
         public void tick(){
             //TODO: Handle tick effects.
             //Handle duration ticks.
+            boolean updateActiveEffects = false;
             for(String s : mEffects.keySet()){
                 PriorityQueue<Effect> effects = mEffects.get(s);
                 Effect activeEffect = effects.peek();
@@ -88,7 +89,7 @@ public class EffectManager {
                 }
                 effects.removeIf((effect) -> effect.getDuration() <= 0);
                 if(effects.peek() != activeEffect){
-                    updateActiveEffectsList();
+                    updateActiveEffects = true;
                     activeEffect.onEffectRemove(effects.peek(), mEntity);
                     if(effects.peek() != null){
                         effects.peek().onEffectAdd(activeEffect, mEntity);
@@ -97,6 +98,9 @@ public class EffectManager {
                 if(effects.isEmpty()){
                     mEffects.remove(s);
                 }
+            }
+            if(updateActiveEffects){
+                updateActiveEffectsList();
             }
         }
 
