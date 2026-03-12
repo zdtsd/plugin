@@ -1,10 +1,14 @@
 package io.github.z.plugin.utils;
 
 import io.github.z.plugin.events.DamageEvent;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
+
+import java.util.Objects;
 
 public class DamageUtils {
     public static DamageEvent.Metadata nextMetadata;
@@ -50,6 +54,13 @@ public class DamageUtils {
             damagee.setVelocity(velocity);
         }
 
+    }
+
+    //TODO: Set up an event structure for interception purposes.
+    public static double healEntity(LivingEntity entity, double amount){
+        double amountHealed = Math.min(amount, Objects.requireNonNull(entity.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue() - entity.getHealth());
+        entity.heal(amount);
+        return amountHealed;
     }
 
 

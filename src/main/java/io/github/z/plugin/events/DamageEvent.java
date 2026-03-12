@@ -57,6 +57,7 @@ public class DamageEvent extends Event implements Cancellable {
             return type == getType(cause);
         }
 
+
         private static final Set<DamageType> environmentalDamage = EnumSet.of(FIRE, FALL);
         public static boolean isEnvironmental(DamageType type){
             return type.isEnvironmental();
@@ -237,6 +238,9 @@ public class DamageEvent extends Event implements Cancellable {
         return mMetadata.mType.isEnvironmental();
     }
     public boolean isType(DamageType type) {return mMetadata.mType == type;}
+    public boolean isCrit(){
+        return mIsCrit;
+    }
 
     public boolean doesDamageTriggerAspect(){
         DamageEvent.DamageType type = mMetadata.getType();
