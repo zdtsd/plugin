@@ -6,6 +6,7 @@ import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -23,4 +24,7 @@ public interface ItemStat extends GenericPlayerModifier {
         return;
     }
 
+    default void onPlayerItemBreak(Player player, PlayerItemBreakEvent event, double level){
+        return;
+    }
 }

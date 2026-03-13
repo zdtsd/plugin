@@ -15,10 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -89,5 +86,15 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void playerLandsOnGroundEvent(PlayerLandsOnGroundEvent event){
         ItemStatManager.onPlayerLandsOnGround(event.getPlayer(), event);
+    }
+
+    @EventHandler
+    public void playerBreaksItemEvent(PlayerItemBreakEvent event){
+        ItemStatManager.onPlayerItemBreak(event.getPlayer(), event);
+    }
+
+    @EventHandler
+    public void playerDurabilityDamageEvent(PlayerItemDamageEvent event){
+        event.setCancelled(true);
     }
 }

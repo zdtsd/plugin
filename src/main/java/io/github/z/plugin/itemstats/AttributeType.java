@@ -11,6 +11,8 @@ public enum AttributeType {
     PROJECTILE_DAMAGE_BASE(new BaseProjDamage(), "Projectile Damage", true),
     PROJECTILE_SPEED_BASE(new BaseProjectileSpeed(), "Projectile Speed", true),
     MAGAZINE_SIZE_BASE(new BaseMagazineSize(), "Magazine Size", true),
+    SHIELD_HEALTH_BASE(new BaseShieldHealth(), "Shield Health", true),
+    SHIELD_HEALTH_REGEN(new BaseShieldRegen(), "Shield Regeneration", true),
 
     //Custom Attributes
     CUSTOM_DEFENSE(new Defense(), "Defense"),

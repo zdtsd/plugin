@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
@@ -373,7 +374,7 @@ public class ItemStatUtils {
         //Clean and refresh attributes
         NBT.modify(item, nbt -> {
             nbt.modifyMeta((nbtr, meta) -> {
-                meta.setUnbreakable(true);
+                //meta.setUnbreakable(true);
 
                 //Remove all attributes
                 meta.setAttributeModifiers(null);
@@ -455,6 +456,13 @@ public class ItemStatUtils {
             }
             return null;
         });
+    }
+
+    public static void setMaxDurabilityDamage(ItemStack item, int max){
+        if(item.getItemMeta() instanceof Damageable damageable){
+            damageable.setMaxDamage(max);
+            item.setItemMeta(damageable);
+        }
     }
 
     public static String integerToRomanNumeral(int input) {

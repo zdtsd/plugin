@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -37,6 +38,10 @@ public class ItemStatManager {
 
     public static double getStat(Player player, ItemStat stat){
         return playerStats.get(player.getUniqueId()).getItemStats().get(stat);
+    }
+
+    public static double getAttribute(Player player, AttributeType type){
+        return getStat(player, type.getStat());
     }
 
 
@@ -115,6 +120,14 @@ public class ItemStatManager {
         if(playerStats.containsKey(player.getUniqueId())){
             for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
                 entry.getKey().onPlayerDropKeyEvent(player, entry.getValue());
+            }
+        }
+    }
+
+    public static void onPlayerItemBreak(Player player, PlayerItemBreakEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onPlayerItemBreak(player, event, entry.getValue());
             }
         }
     }

@@ -242,6 +242,10 @@ public class DamageEvent extends Event implements Cancellable {
         return mIsCrit;
     }
 
+    public boolean isBlockedByShield(){
+        return mEvent.getDamage(EntityDamageEvent.DamageModifier.BLOCKING) < 0;
+    }
+
     public boolean doesDamageTriggerAspect(){
         DamageEvent.DamageType type = mMetadata.getType();
         return (type == DamageType.MELEE_ATTACK) || (type == DamageType.PROJ_ATTACK);
