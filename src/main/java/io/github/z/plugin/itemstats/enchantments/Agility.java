@@ -17,7 +17,7 @@ import java.util.Map;
 public class Agility implements Enchantment {
 
     private static Map<Player, Boolean> mCanJump = new HashMap<>();
-    private static final double speed = 0.9;
+    private static final double speed = 1.3;
     private static final String doubleJumpToken = "agl";
     @Override
     public String getName() {

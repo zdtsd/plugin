@@ -30,7 +30,7 @@ public class SwashbucklerSecondWind extends Ability {
         return playerStance;
     }
 
-    private static final double healAmount = 1;
+    private static final double healAmount = 2;
 
     @Override
     public void onDamage(DamageEvent event) {
