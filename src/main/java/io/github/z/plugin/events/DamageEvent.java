@@ -223,6 +223,9 @@ public class DamageEvent extends Event implements Cancellable {
     public Entity getDamager(){
         return mDamager;
     }
+    public double getBaseDamage(){
+        return mBaseDamage;
+    }
 
 
     public boolean isMelee(){

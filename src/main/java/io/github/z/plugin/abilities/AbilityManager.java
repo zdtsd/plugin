@@ -35,6 +35,7 @@ public class AbilityManager {
         mAllAbilities.add(SwashbuckerShieldBash.DATA);
         mAllAbilities.add(SwashbucklerBladeDance.DATA);
         mAllAbilities.add(SwashbucklerSecondWind.DATA);
+        mAllAbilities.add(SwashbucklerRiposte.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
@@ -102,6 +103,11 @@ public class AbilityManager {
     public static void onClick(Player player, PlayerInteractEvent event){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.onClick(event);
+        }
+    }
+    public static void onShieldBlockDamage(Player player, DamageEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onShieldBlockDamage(event);
         }
     }
 

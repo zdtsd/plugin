@@ -47,6 +47,10 @@ public abstract class Ability {
 
     }
 
+    public void onShieldBlockDamage(DamageEvent event){
+
+    }
+
     public List<String> getSidebarLines(){
         return new ArrayList<>();
     }

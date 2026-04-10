@@ -30,6 +30,7 @@ public class SwashbucklerClassGUI extends AbilitySelectGUI {
         createClassAbilityButton(SwashbuckerShieldBash.DATA, 22);
         createClassAbilityButton(SwashbucklerBladeDance.DATA, 31);
         createClassAbilityButton(SwashbucklerSecondWind.DATA, 40);
+        createClassAbilityButton(SwashbucklerRiposte.DATA, 49);
     }
 
 

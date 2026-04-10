@@ -19,12 +19,8 @@ public class BaseShieldRegen implements Attribute {
     public void tick(Entity entity, double value, boolean twoHz, boolean oneHz) {
         if(entity instanceof Player player){
             if(player.getActiveItem().getType() != Material.SHIELD){
-                Bukkit.getLogger().info("Healing!");
                 double healValue = value / 4;
                 ShieldUtils.healShield(player, healValue);
-            }
-            else {
-                Bukkit.getLogger().info("NOT healing!");
             }
         }
     }

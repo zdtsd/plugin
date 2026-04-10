@@ -54,4 +54,10 @@ public class DamageListener implements Listener {
             EffectManager.onHurt(damagee, event);
         }
     }
+
+
+    //Called by the base shield health class. Maybe refactor to its own event?
+    public static void onShieldBlockDamage(Player player, DamageEvent damageEvent){
+        AbilityManager.onShieldBlockDamage(player, damageEvent);
+    }
 }
