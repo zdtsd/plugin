@@ -55,7 +55,7 @@ public class SwashbucklerStance extends Ability {
     }
 
     private SwashbucklerStanceType currentStance = SwashbucklerStanceType.NEUTRAL;
-    private final int mDuration = 8 * 20;
+    private final int mDuration = 10 * 20;
     private int mRemainingDuration = 0;
 
     public SwashbucklerStance(Player player) {
