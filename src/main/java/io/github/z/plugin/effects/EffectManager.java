@@ -1,7 +1,10 @@
 package io.github.z.plugin.effects;
 
 import io.github.z.plugin.GenericEntityModifier;
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -120,8 +123,15 @@ public class EffectManager {
     }
 
     public static void applyEffect(Entity entity, Effect effect, String originName){
-        EffectSet set = mInstance.getOrCreateEffectSet(entity);
-        set.addEffect(originName, effect);
+        applyEffect(entity, null, effect, originName);
+    }
+
+    public static void applyEffect(Entity entity, Entity sourceEntity, Effect effect, String originName){
+        ApplyEffectEvent event = new ApplyEffectEvent(entity, sourceEntity, effect, originName);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+        EffectSet set = mInstance.getOrCreateEffectSet(event.getEntity());
+        set.addEffect(event.getOriginName(), event.getEffect());
     }
 
     public List<String> getSidebarLines(Player player){
@@ -148,6 +158,20 @@ public class EffectManager {
         EffectSet set = mInstance.getOrCreateEffectSet(entity);
         for(Effect effect : set.getActiveEffects()){
             effect.onHurt(entity, event, effect.getStrength());
+        }
+    }
+
+    public static void onApplyEffect(Entity entity, ApplyEffectEvent event){
+        EffectSet set = mInstance.getOrCreateEffectSet(entity);
+        for(Effect effect : set.getActiveEffects()){
+            effect.onApplyEffect(entity, event, effect.getStrength());
+        }
+    }
+
+    public static void onReceiveEffect(Entity entity, ApplyEffectEvent event){
+        EffectSet set = mInstance.getOrCreateEffectSet(entity);
+        for(Effect effect : set.getActiveEffects()){
+            effect.onReceiveEffect(entity, event, effect.getStrength());
         }
     }
 

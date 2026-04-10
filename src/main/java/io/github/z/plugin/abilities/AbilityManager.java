@@ -5,6 +5,7 @@ import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import io.github.z.plugin.abilities.testing.TestingAbilityWeakness;
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
@@ -105,6 +106,34 @@ public class AbilityManager {
             ability.onClick(event);
         }
     }
+    public static void reduceCooldowns(Player player, int ticks){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            if(ability instanceof CooldownAbility cdAbility){
+                cdAbility.progressCooldown(ticks);
+            }
+        }
+    }
+
+    public static void reduceCooldownsByPercent(Player player, double percent){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            if(ability instanceof CooldownAbility cdAbility){
+                cdAbility.progressCooldown((int)(cdAbility.getData().getCooldown() * percent));
+            }
+        }
+    }
+
+    public static void onApplyEffect(Player player, ApplyEffectEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onApplyEffect(event);
+        }
+    }
+
+    public static void onReceiveEffect(Player player, ApplyEffectEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onReceiveEffect(event);
+        }
+    }
+
     public static void onShieldBlockDamage(Player player, DamageEvent event){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.onShieldBlockDamage(event);

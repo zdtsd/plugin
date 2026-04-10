@@ -1,6 +1,7 @@
 package io.github.z.plugin.abilities;
 
 import io.github.z.plugin.GenericPlayerModifier;
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,6 +49,14 @@ public abstract class Ability {
     }
 
     public void onShieldBlockDamage(DamageEvent event){
+
+    }
+
+    public void onApplyEffect(ApplyEffectEvent event){
+
+    }
+
+    public void onReceiveEffect(ApplyEffectEvent event){
 
     }
 

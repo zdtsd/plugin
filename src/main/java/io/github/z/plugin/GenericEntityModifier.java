@@ -1,5 +1,6 @@
 package io.github.z.plugin;
 
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.entity.Entity;
@@ -44,6 +45,13 @@ public interface GenericEntityModifier {
 
     }
     default void onHurt(Entity entity, DamageEvent event, double level){
+
+    }
+
+    default void onApplyEffect(Entity entity, ApplyEffectEvent event, double level){
+
+    }
+    default void onReceiveEffect(Entity entity, ApplyEffectEvent event, double level){
 
     }
 

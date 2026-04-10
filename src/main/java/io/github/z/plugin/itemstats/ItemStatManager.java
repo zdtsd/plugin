@@ -1,5 +1,6 @@
 package io.github.z.plugin.itemstats;
 
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
@@ -65,6 +66,22 @@ public class ItemStatManager {
         if(playerStats.containsKey(player.getUniqueId())){
             for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
                 entry.getKey().onHurt(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onApplyEffect(Player player, ApplyEffectEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onApplyEffect(player, event, entry.getValue());
+            }
+        }
+    }
+
+    public static void onReceiveEffect(Player player, ApplyEffectEvent event){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onReceiveEffect(player, event, entry.getValue());
             }
         }
     }

@@ -1,9 +1,13 @@
 package io.github.z.plugin.listeners;
 
+import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.effects.EffectManager;
+import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.ProjectileUtils;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -14,6 +18,26 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class EntityListener implements Listener {
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void applyEffectEvent(ApplyEffectEvent event){
+        Entity source = event.getSourceEntity();
+        Entity target = event.getEntity();
+
+        if(source instanceof Player player){
+            ItemStatManager.onApplyEffect(player, event);
+            AbilityManager.onApplyEffect(player, event);
+        }
+        if(source != null){
+            EffectManager.onApplyEffect(source, event);
+        }
+
+        if(target instanceof Player player){
+            ItemStatManager.onReceiveEffect(player, event);
+            AbilityManager.onReceiveEffect(player, event);
+        }
+        EffectManager.onReceiveEffect(target, event);
+    }
+
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void entityProjLaunchEvent(ProjectileLaunchEvent event){
         if(event.getEntity().getShooter() instanceof Player player){
