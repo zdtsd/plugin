@@ -25,6 +25,7 @@ public enum EnchantmentType {
     BLAST_PROTECTION(new BlastProtection(), "Blast Protection", true, false),
     AGILITY(new Agility(), "Agility", false, false),
     THUNDER_ASPECT(new ThunderAspect(), "Thunder Aspect", true, false),
+    DOUBLE_DAMAGE(new DoubleDamage(), "Double Damage", false, false),
 
     //Vanilla Enchantments
     CURSE_OF_VANISHING(Enchantment.VANISHING_CURSE, "Curse of Vanishing", false, true);
