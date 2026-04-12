@@ -15,8 +15,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,5 +98,13 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void playerDurabilityDamageEvent(PlayerItemDamageEvent event){
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void entityPotionEffectEvent(EntityPotionEffectEvent event){
+        if(event.getEntity() instanceof Player && event.getNewEffect() != null
+                && event.getNewEffect().getType().equals(PotionEffectType.WEAKNESS)){
+            event.setCancelled(true);
+        }
     }
 }

@@ -37,6 +37,7 @@ public class AbilityManager {
         mAllAbilities.add(SwashbucklerBladeDance.DATA);
         mAllAbilities.add(SwashbucklerSecondWind.DATA);
         mAllAbilities.add(SwashbucklerRiposte.DATA);
+        mAllAbilities.add(SwashbucklerAgileDefenses.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){

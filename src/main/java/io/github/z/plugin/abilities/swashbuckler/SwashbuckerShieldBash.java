@@ -65,9 +65,7 @@ public class SwashbuckerShieldBash extends CooldownAbility {
 
             //Set stance BEFORE damage to increase damage when switching to Offensive.
             SwashbucklerStance stance = getOrFetchStance();
-            if(stance.getStance() == SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE){
-                stance.setStance(SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE);
-            }
+            stance.setStance(SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE);
 
             for(Entity entity : entitiesHit){
                 if(entity instanceof LivingEntity le){

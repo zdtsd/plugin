@@ -18,7 +18,7 @@ public class ProjectileUtils {
     public static final String crossbowAmmoNBTTag = "crossbowAmmo";
 
     //Default damage for a projectile without modifications.
-    private static final int defaultProjDamage = 1;
+    private static final int defaultProjDamage = 3;
 
     //Used to store decimal values in integer scoreboards.
     private static final double damageScalar = 10;
