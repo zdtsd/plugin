@@ -4,6 +4,7 @@ import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.ProjectileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -20,7 +21,12 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void entityDamageEvent(EntityDamageEvent event){
         if(event.getEntity() instanceof LivingEntity le){
-            Bukkit.getPluginManager().callEvent(new DamageEvent(event, le));
+            DamageEvent.Metadata metadata = DamageUtils.nextMetadata;
+            DamageUtils.nextMetadata = null;
+            DamageEvent damageEvent = metadata != null
+                    ? new DamageEvent(event, le, metadata)
+                    : new DamageEvent(event, le);
+            Bukkit.getPluginManager().callEvent(damageEvent);
         }
 
         if(event.getDamage() < 0){

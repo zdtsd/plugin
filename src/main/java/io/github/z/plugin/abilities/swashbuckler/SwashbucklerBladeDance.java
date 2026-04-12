@@ -26,7 +26,7 @@ public class SwashbucklerBladeDance extends CooldownAbility {
     public static AbilityData<SwashbucklerBladeDance> DATA = new AbilityData<>(SwashbucklerBladeDance.class, "Blade Dance", SwashbucklerBladeDance::new)
             .scoreboardID("SwshDance")
             .displayMaterial(Material.IRON_SWORD)
-            .cooldown(3 * 20);
+            .cooldown(8 * 20);
 
 
     private static final double mTickDamage = 1, mFinalDamage = 8, mRadius = 4, mTickHitUpSpeed = 0.2;

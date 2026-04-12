@@ -3,6 +3,7 @@ package io.github.z.plugin.abilities;
 import io.github.z.plugin.GenericPlayerModifier;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -57,6 +58,10 @@ public abstract class Ability {
     }
 
     public void onReceiveEffect(ApplyEffectEvent event){
+
+    }
+
+    public void onPlayerLandsOnGround(PlayerLandsOnGroundEvent event){
 
     }
 

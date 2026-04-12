@@ -3,6 +3,7 @@ package io.github.z.plugin.effects;
 import io.github.z.plugin.GenericEntityModifier;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -172,6 +173,13 @@ public class EffectManager {
         EffectSet set = mInstance.getOrCreateEffectSet(entity);
         for(Effect effect : set.getActiveEffects()){
             effect.onReceiveEffect(entity, event, effect.getStrength());
+        }
+    }
+
+    public static void onPlayerLandsOnGround(Entity entity, PlayerLandsOnGroundEvent event){
+        EffectSet set = mInstance.getOrCreateEffectSet(entity);
+        for(Effect effect : set.getActiveEffects()){
+            effect.onPlayerLandsOnGround(entity, event, effect.getStrength());
         }
     }
 

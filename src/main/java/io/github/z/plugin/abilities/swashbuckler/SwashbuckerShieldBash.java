@@ -21,7 +21,7 @@ public class SwashbuckerShieldBash extends CooldownAbility {
     public static AbilityData<SwashbuckerShieldBash> DATA = new AbilityData<>(SwashbuckerShieldBash.class, "Shield Bash", SwashbuckerShieldBash::new)
             .scoreboardID("SwshBash")
             .displayMaterial(Material.SHIELD)
-            .cooldown(7 * 20);
+            .cooldown(5 * 20);
 
     SwashbucklerStance playerStance;
     private static final double coneWidthDegrees = Math.toRadians(90), coneRange = 6;

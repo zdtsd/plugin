@@ -7,6 +7,7 @@ import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import io.github.z.plugin.abilities.testing.TestingAbilityWeakness;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
@@ -38,6 +39,7 @@ public class AbilityManager {
         mAllAbilities.add(SwashbucklerSecondWind.DATA);
         mAllAbilities.add(SwashbucklerRiposte.DATA);
         mAllAbilities.add(SwashbucklerAgileDefenses.DATA);
+        mAllAbilities.add(SwashbucklerMeteorSlam.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
@@ -132,6 +134,12 @@ public class AbilityManager {
     public static void onReceiveEffect(Player player, ApplyEffectEvent event){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.onReceiveEffect(event);
+        }
+    }
+
+    public static void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onPlayerLandsOnGround(event);
         }
     }
 

@@ -2,6 +2,7 @@ package io.github.z.plugin;
 
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -68,6 +69,10 @@ public interface GenericEntityModifier {
     }
 
     default void onCrossbowLoad(Entity entity, EntityLoadCrossbowEvent event, double level){
+
+    }
+
+    default void onPlayerLandsOnGround(Entity entity, PlayerLandsOnGroundEvent event, double level){
 
     }
 }

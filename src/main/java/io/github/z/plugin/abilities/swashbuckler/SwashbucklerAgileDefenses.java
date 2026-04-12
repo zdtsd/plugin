@@ -55,6 +55,8 @@ public class SwashbucklerAgileDefenses extends Ability {
         }
     }
 
+    private static final int stunDuration = 20 * 2;
+
     @Override
     public void onHurt(DamageEvent event) {
         if (!mAvailable) return;
@@ -71,10 +73,10 @@ public class SwashbucklerAgileDefenses extends Ability {
             mSpentInStance = currentStance;
             Entity source = event.getSource();
             if (source != null) {
-                EffectManager.applyEffect(source, mPlayer, new StunEffect(20, 1), StunEffect.stunNamespace);
+                EffectManager.applyEffect(source, mPlayer, new StunEffect(stunDuration, 1), StunEffect.stunNamespace);
             }
             if (event.isMelee()) {
-                mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
             } else {
                 mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }

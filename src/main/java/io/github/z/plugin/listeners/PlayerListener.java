@@ -1,6 +1,7 @@
 package io.github.z.plugin.listeners;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.ProjectileUtils;
@@ -88,6 +89,8 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void playerLandsOnGroundEvent(PlayerLandsOnGroundEvent event){
         ItemStatManager.onPlayerLandsOnGround(event.getPlayer(), event);
+        AbilityManager.onPlayerLandsOnGround(event.getPlayer(), event);
+        EffectManager.onPlayerLandsOnGround(event.getPlayer(), event);
     }
 
     @EventHandler
