@@ -18,10 +18,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class SwashbucklerMeteorSlam extends Ability {
+public class SwashbucklerPanache extends Ability {
 
-    public static AbilityData<SwashbucklerMeteorSlam> DATA = new AbilityData<>(SwashbucklerMeteorSlam.class, "Meteor Slam", SwashbucklerMeteorSlam::new)
-            .scoreboardID("SwshMeteorSlam")
+    public static AbilityData<SwashbucklerPanache> DATA = new AbilityData<>(SwashbucklerPanache.class, "Panache", SwashbucklerPanache::new)
+            .scoreboardID("SwshSlam")
             .displayMaterial(Material.IRON_BOOTS);
 
     private static final double mMinFallDistance = 5, mRadius = 5, mDamage = 10;
@@ -37,7 +37,7 @@ public class SwashbucklerMeteorSlam extends Ability {
         return mPlayerStance;
     }
 
-    public SwashbucklerMeteorSlam(Player player) {
+    public SwashbucklerPanache(Player player) {
         super(player);
     }
 
@@ -54,14 +54,12 @@ public class SwashbucklerMeteorSlam extends Ability {
 
         boolean offensiveStance = getOrFetchStance().getStance() == SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE;
 
-        boolean hitAny = false;
         for (Entity entity : EntityUtils.getEntitiesInSphere(mPlayer.getLocation(), mRadius)) {
             if (entity instanceof LivingEntity le && !(entity instanceof Player)) {
                 DamageUtils.damage(mPlayer, le, DamageEvent.DamageType.MELEE_SKILL, mDamage, DATA.getName(), true, false);
                 if (offensiveStance) {
                     EffectManager.applyEffect(le, new StunEffect(mStunDuration, 1), StunEffect.stunNamespace);
                 }
-                hitAny = true;
             }
         }
 

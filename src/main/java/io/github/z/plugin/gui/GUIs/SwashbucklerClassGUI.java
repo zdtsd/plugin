@@ -1,9 +1,6 @@
 package io.github.z.plugin.gui.GUIs;
 
 import io.github.z.plugin.abilities.swashbuckler.*;
-import io.github.z.plugin.abilities.testing.TestingAbilityOne;
-import io.github.z.plugin.abilities.testing.TestingAbilityThree;
-import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +29,7 @@ public class SwashbucklerClassGUI extends AbilitySelectGUI {
         createClassAbilityButton(SwashbucklerSecondWind.DATA, 40);
         createClassAbilityButton(SwashbucklerRiposte.DATA, 49);
         createClassAbilityButton(SwashbucklerAgileDefenses.DATA, 5);
-        createClassAbilityButton(SwashbucklerMeteorSlam.DATA, 14);
+        createClassAbilityButton(SwashbucklerPanache.DATA, 14);
     }
 
 

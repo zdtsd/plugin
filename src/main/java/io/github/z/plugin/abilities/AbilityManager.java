@@ -11,7 +11,6 @@ import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -39,7 +38,7 @@ public class AbilityManager {
         mAllAbilities.add(SwashbucklerSecondWind.DATA);
         mAllAbilities.add(SwashbucklerRiposte.DATA);
         mAllAbilities.add(SwashbucklerAgileDefenses.DATA);
-        mAllAbilities.add(SwashbucklerMeteorSlam.DATA);
+        mAllAbilities.add(SwashbucklerPanache.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){
