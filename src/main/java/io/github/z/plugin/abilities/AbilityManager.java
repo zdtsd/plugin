@@ -5,6 +5,7 @@ import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import io.github.z.plugin.abilities.testing.TestingAbilityWeakness;
+import io.github.z.plugin.abilities.testing.TestingCutscene;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
@@ -31,6 +32,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityTwo.DATA);
         mAllAbilities.add(TestingAbilityThree.DATA);
         mAllAbilities.add(TestingAbilityWeakness.DATA);
+        mAllAbilities.add(TestingCutscene.DATA);
         mAllAbilities.add(SwashbucklerStance.DATA);
         mAllAbilities.add(SwashbucklerReposition.DATA);
         mAllAbilities.add(SwashbuckerShieldBash.DATA);

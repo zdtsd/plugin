@@ -1,6 +1,7 @@
 package io.github.z.plugin;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.cutscenes.CutsceneManager;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.sidebar.SidebarManager;
@@ -23,6 +24,7 @@ public class Timer {
         Bukkit.getScheduler().scheduleSyncDelayedTask(mPlugin, Timer::tick, 1);
 
         mCounter++;
+        CutsceneManager.tick();
         boolean fourHz = mCounter % 5 == 0;
         boolean twoHz = mCounter % 10 == 0;
         boolean oneHz = mCounter % 20 == 0;

@@ -5,6 +5,7 @@ import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
 import io.github.z.plugin.abilities.testing.TestingAbilityWeakness;
+import io.github.z.plugin.abilities.testing.TestingCutscene;
 import io.github.z.plugin.gui.GUI;
 import io.github.z.plugin.gui.GUIButton;
 import io.github.z.plugin.utils.AbilityUtils;
@@ -34,6 +35,7 @@ public class TestingClassGUI extends AbilitySelectGUI {
         createClassAbilityButton(TestingAbilityTwo.DATA, 31);
         createClassAbilityButton(TestingAbilityThree.DATA, 49);
         createClassAbilityButton(TestingAbilityWeakness.DATA, 4);
+        createClassAbilityButton(TestingCutscene.DATA, 22);
     }
 
 
