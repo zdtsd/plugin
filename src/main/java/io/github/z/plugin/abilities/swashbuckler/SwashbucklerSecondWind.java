@@ -4,9 +4,13 @@ import io.github.z.plugin.abilities.Ability;
 import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.events.DamageEvent;
+import io.github.z.plugin.particles.PointParticleSet;
 import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 public class SwashbucklerSecondWind extends Ability {
@@ -36,6 +40,12 @@ public class SwashbucklerSecondWind extends Ability {
     public void onDamage(DamageEvent event) {
         if(event.isCrit() && getOrFetchStance().getStance() == SwashbucklerStance.SwashbucklerStanceType.DEFENSIVE){
             DamageUtils.healEntity(mPlayer, healAmount);
+            mPlayer.getWorld().playSound(mPlayer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1f, 1f);
+            new PointParticleSet()
+                    .setParticle(Particle.HEART)
+                    .setCount(5)
+                    .setLocation(mPlayer.getLocation())
+                    .generateParticles();
         }
     }
 }
