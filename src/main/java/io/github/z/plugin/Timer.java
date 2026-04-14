@@ -4,6 +4,7 @@ import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.cutscenes.CutsceneManager;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.mobspells.MobSpellManager;
 import io.github.z.plugin.sidebar.SidebarManager;
 import io.github.z.plugin.utils.PlayerUtils;
 import io.github.z.plugin.utils.TABUtils;
@@ -35,6 +36,7 @@ public class Timer {
                 ItemStatManager.tick(player, twoHz, oneHz);
                 AbilityManager.tick(player, twoHz, oneHz);
             }
+            MobSpellManager.tick(twoHz, oneHz);
             for(TabPlayer tabPlayer : TABUtils.getTABPlayers()){
                 SidebarManager.getInstance().tick(tabPlayer);
             }

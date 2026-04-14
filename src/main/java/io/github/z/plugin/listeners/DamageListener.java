@@ -4,6 +4,7 @@ import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.mobspells.MobSpellManager;
 import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.ProjectileUtils;
 import org.bukkit.Bukkit;
@@ -48,10 +49,14 @@ public class DamageListener implements Listener {
         if(source instanceof Player player){
             ItemStatManager.onDamage(player, event);
             AbilityManager.onDamage(player, event);
+        } else if(source instanceof LivingEntity le){
+            MobSpellManager.onDamage(le, event);
         }
         if(damagee instanceof Player player){
             ItemStatManager.onHurt(player, event);
             AbilityManager.onHurt(player, event);
+        } else if(damagee instanceof LivingEntity){
+            MobSpellManager.onHurt(damagee, event);
         }
         if(source != null){
             EffectManager.onDamage(source, event);

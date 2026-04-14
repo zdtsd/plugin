@@ -1,6 +1,7 @@
 package io.github.z.plugin;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.mobspells.MobSpellManager;
 import io.github.z.plugin.commands.*;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.itemstats.ItemStat;
@@ -19,6 +20,7 @@ public final class Plugin extends JavaPlugin {
     private static ProtocolLibManager mProtocolLibManager;
     private static ProjectileUtils projectileUtils;
     private static AbilityManager mAbilityManager;
+    private static MobSpellManager mMobSpellManager;
     private static SidebarManager mSidebarManager;
     private static DoubleJumpManager mDoubleJumpManager;
     private static EffectManager mEffectManager;
@@ -43,6 +45,7 @@ public final class Plugin extends JavaPlugin {
         //Set up utils.
         mProtocolLibManager = new ProtocolLibManager();
         mAbilityManager = new AbilityManager();
+        mMobSpellManager = new MobSpellManager();
         projectileUtils = new ProjectileUtils();
         mSidebarManager = new SidebarManager();
         mDoubleJumpManager = new DoubleJumpManager();

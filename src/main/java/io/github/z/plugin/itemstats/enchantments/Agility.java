@@ -41,6 +41,5 @@ public class Agility implements Enchantment {
     public void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event, double level) {
         mCanJump.put(player, true);
         DoubleJumpManager.addDoubleJumpToken(player, doubleJumpToken);
-        Bukkit.getLogger().info("Agility wearing player landed on ground!");
     }
 }
