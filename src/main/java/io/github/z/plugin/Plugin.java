@@ -6,6 +6,7 @@ import io.github.z.plugin.commands.*;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.itemstats.ItemStat;
 import io.github.z.plugin.itemstats.ItemStatUtils;
+import io.github.z.plugin.libraryofsouls.LibraryOfSoulsManager;
 import io.github.z.plugin.listeners.*;
 import io.github.z.plugin.protocollib.ProtocolLibManager;
 import io.github.z.plugin.sidebar.SidebarManager;
@@ -24,6 +25,7 @@ public final class Plugin extends JavaPlugin {
     private static SidebarManager mSidebarManager;
     private static DoubleJumpManager mDoubleJumpManager;
     private static EffectManager mEffectManager;
+    private static LibraryOfSoulsManager mLibraryOfSoulsManager;
     private static Plugin plugin;
 
     public static Plugin getPlugin(){
@@ -41,8 +43,10 @@ public final class Plugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BookOfSoulsListener(), this);
 
         //Set up utils.
+        mLibraryOfSoulsManager = new LibraryOfSoulsManager();
         mProtocolLibManager = new ProtocolLibManager();
         mAbilityManager = new AbilityManager();
         mMobSpellManager = new MobSpellManager();
@@ -58,6 +62,8 @@ public final class Plugin extends JavaPlugin {
         new UpdateItemCommand().register();
         new SetSlotCommand().register();
         new OpenClassGUICommand().register();
+        new LibraryOfSoulsCommand().register();
+        new BookOfSoulsCommand().register();
         Timer.setPlugin(this);
 
         for(ItemStat stat : ItemStatUtils.getAllStats()){
@@ -67,6 +73,8 @@ public final class Plugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if (mLibraryOfSoulsManager != null) {
+            mLibraryOfSoulsManager.shutdown();
+        }
     }
 }

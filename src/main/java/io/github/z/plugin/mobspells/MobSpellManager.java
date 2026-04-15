@@ -1,12 +1,13 @@
 package io.github.z.plugin.mobspells;
 
-import de.tr7zw.nbtapi.NBT;
-import de.tr7zw.nbtapi.iface.ReadableNBT;
+import io.github.z.plugin.Plugin;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.mobspells.testing.TestingLogOnHurt;
-import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -16,8 +17,7 @@ public class MobSpellManager {
     private final List<MobSpellData<?>> mAllSpells = new ArrayList<>();
     private final Map<UUID, MobSpellSet> mSpells = new HashMap<>();
 
-    private static final String SPELLS_NBT_TAG = "mobSpells";
-    private static final String LEVEL_NBT_TAG = "level";
+    private static final NamespacedKey SPELLS_KEY = new NamespacedKey(Plugin.getPlugin(), "mob_spells");
 
     public MobSpellManager() {
         mobSpellManager = this;
@@ -30,54 +30,64 @@ public class MobSpellManager {
         return mobSpellManager;
     }
 
+    public List<MobSpellData<?>> getAllSpells() {
+        return Collections.unmodifiableList(mAllSpells);
+    }
+
     /**
-     * Reads the entity's NBT and grants any registered mob spells found there.
+     * Reads spell data from the entity's Persistent Data Container and grants
+     * any registered mob spells found there.
      *
-     * <p>Expected NBT structure on the entity:
-     * <pre>
-     * mobSpells (compound)
-     * └── [SpellName] (compound)   -- must match MobSpellData.getName() exactly
-     *     └── level (int)          -- spell level; 0 is ignored
-     * </pre>
+     * PDC structure on the entity:
+     *   mob_spells (TAG_CONTAINER)
+     *   └── [SpellName] (INTEGER) — spell level; 0 is ignored
      *
-     * <p>Example summon command:
-     * <pre>
-     * /summon zombie ~ ~ ~ {mobSpells:{MySpellName:{level:1}}}
-     * </pre>
+     * Set spells on an entity programmatically via applySpells().
      */
     public void grantSpells(LivingEntity entity) {
+        PersistentDataContainer pdc = entity.getPersistentDataContainer();
+        if (!pdc.has(SPELLS_KEY, PersistentDataType.TAG_CONTAINER)) {
+            return;
+        }
+
+        PersistentDataContainer spellsContainer = pdc.get(SPELLS_KEY, PersistentDataType.TAG_CONTAINER);
         MobSpellSet spellSet = new MobSpellSet();
 
-        //TODO: Make spell tag get found somehow
-        NBT.get(entity, nbt -> {
-            for(String s : nbt.getKeys()){
-                Bukkit.getLogger().info(s + " tag found");
-            }
-            ReadableNBT spellsNBT = nbt.getCompound(SPELLS_NBT_TAG);
-            if (spellsNBT == null) {
-                Bukkit.getLogger().info("Spell Tag NOT Found!");
-                return;
-            }
-            Bukkit.getLogger().info("Spell Tag Found!");
-
-            for (MobSpellData<?> data : mAllSpells) {
-                ReadableNBT spellNBT = spellsNBT.getCompound(data.getName());
-                if (spellNBT != null) {
-                    Bukkit.getLogger().info("Spell Compound Found!");
-                    int level = spellNBT.getInteger(LEVEL_NBT_TAG);
-                    if (level != 0) {
-                        MobSpell spell = data.getNewInstance(entity);
-                        spell.setLevel(level);
-                        spellSet.addSpell(spell);
-                        Bukkit.getLogger().info("Spell added!");
-                    }
+        for (MobSpellData<?> data : mAllSpells) {
+            NamespacedKey spellKey = new NamespacedKey(Plugin.getPlugin(), data.getName().toLowerCase());
+            if (spellsContainer.has(spellKey, PersistentDataType.INTEGER)) {
+                int level = spellsContainer.get(spellKey, PersistentDataType.INTEGER);
+                if (level != 0) {
+                    MobSpell spell = data.getNewInstance(entity);
+                    spell.setLevel(level);
+                    spellSet.addSpell(spell);
                 }
             }
-        });
+        }
 
         if (!spellSet.getSpells().isEmpty()) {
             mSpells.put(entity.getUniqueId(), spellSet);
         }
+    }
+
+    /**
+     * Writes spell data onto the entity's Persistent Data Container and grants
+     * the spells immediately. Replaces any existing spells on the entity.
+     *
+     * @param spells map of spell name (must match a registered MobSpellData name) to level
+     */
+    public static void applySpells(LivingEntity entity, Map<String, Integer> spells) {
+        PersistentDataContainer pdc = entity.getPersistentDataContainer();
+        PersistentDataContainer spellsContainer = pdc.getAdapterContext().newPersistentDataContainer();
+
+        for (Map.Entry<String, Integer> entry : spells.entrySet()) {
+            NamespacedKey spellKey = new NamespacedKey(Plugin.getPlugin(), entry.getKey().toLowerCase());
+            spellsContainer.set(spellKey, PersistentDataType.INTEGER, entry.getValue());
+        }
+
+        pdc.set(SPELLS_KEY, PersistentDataType.TAG_CONTAINER, spellsContainer);
+        mobSpellManager.removeSpells(entity);
+        mobSpellManager.grantSpells(entity);
     }
 
     public void removeSpells(LivingEntity entity) {
@@ -115,9 +125,7 @@ public class MobSpellManager {
 
     public static void onDamage(LivingEntity entity, DamageEvent event) {
         MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
-        if (set == null) {
-            return;
-        }
+        if (set == null) return;
         for (MobSpell spell : set.getSpells()) {
             spell.onDamage(event);
         }
@@ -125,9 +133,7 @@ public class MobSpellManager {
 
     public static void onHurt(LivingEntity entity, DamageEvent event) {
         MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
-        if (set == null) {
-            return;
-        }
+        if (set == null) return;
         for (MobSpell spell : set.getSpells()) {
             spell.onHurt(event);
         }
@@ -135,9 +141,7 @@ public class MobSpellManager {
 
     public static void onApplyEffect(LivingEntity entity, ApplyEffectEvent event) {
         MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
-        if (set == null) {
-            return;
-        }
+        if (set == null) return;
         for (MobSpell spell : set.getSpells()) {
             spell.onApplyEffect(event);
         }
@@ -145,9 +149,7 @@ public class MobSpellManager {
 
     public static void onReceiveEffect(LivingEntity entity, ApplyEffectEvent event) {
         MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
-        if (set == null) {
-            return;
-        }
+        if (set == null) return;
         for (MobSpell spell : set.getSpells()) {
             spell.onReceiveEffect(event);
         }
@@ -155,9 +157,7 @@ public class MobSpellManager {
 
     public static MobSpell getSpell(LivingEntity entity, Class<?> spellClass) {
         MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
-        if (set == null) {
-            return null;
-        }
+        if (set == null) return null;
         for (MobSpell spell : set.getSpells()) {
             if (spellClass.isInstance(spell)) {
                 return spell;

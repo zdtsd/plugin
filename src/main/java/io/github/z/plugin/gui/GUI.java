@@ -50,6 +50,26 @@ public abstract class GUI implements InventoryHolder {
         mPlayer.openInventory(mInventory);
     }
 
+    /**
+     * Constructor that skips setupGUI(), buildMenu(), and openInventory().
+     * Use this when a subclass needs to initialize its own fields before setupGUI() runs.
+     * The subclass must call setupGUI(), buildMenu(), and open() itself after field assignment.
+     */
+    protected GUI(Player player, int size, Component title, Material placeholder, boolean autoInit){
+        mInventory = Bukkit.createInventory(this, size, title);
+        mPlayer = player;
+        mPlaceholderMaterial = placeholder;
+        playerGUIMap.put(player, this);
+        for(int i=0; i < size; i++){
+            mButtons.add(null);
+        }
+    }
+
+    public void open(){
+        buildMenu();
+        mPlayer.openInventory(mInventory);
+    }
+
     public void onClose(){
         playerGUIMap.remove(mPlayer);
     }
