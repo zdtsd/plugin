@@ -8,6 +8,7 @@ import io.github.z.plugin.mobspells.MobSpellManager;
 import io.github.z.plugin.utils.ProjectileUtils;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Material;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -56,6 +58,13 @@ public class EntityListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void entityDeathEvent(EntityDeathEvent event) {
         MobSpellManager.getMobSpellManager().removeSpells(event.getEntity());
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void entityExplodeEvent(EntityExplodeEvent event) {
+        if (event.getEntity() instanceof Creeper creeper) {
+            MobSpellManager.onCreeperExplode(creeper, event);
+        }
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

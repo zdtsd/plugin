@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -27,13 +28,27 @@ public class ItemStatManager {
         }
     }
 
-    public static void updateStats(Player player){
+    public static void updateMainhandStats(Player player, ItemStack newMainhand){
         PlayerItemStats stats = playerStats.get(player.getUniqueId());
         if(stats == null){
             stats = new PlayerItemStats(player);
             playerStats.put(player.getUniqueId(), stats);
         }
-        stats.updateStats(player);
+        stats.updateMainhandStats(player, newMainhand);
+    }
+
+    public static void updateArmorStats(Player player){
+        PlayerItemStats stats = playerStats.get(player.getUniqueId());
+        if(stats == null){
+            stats = new PlayerItemStats(player);
+            playerStats.put(player.getUniqueId(), stats);
+        }
+        stats.updateArmorStats(player);
+    }
+
+    public static void updateStats(Player player){
+        updateMainhandStats(player, player.getInventory().getItemInMainHand());
+        updateArmorStats(player);
     }
 
 
@@ -180,6 +195,19 @@ public class ItemStatManager {
                     add(entry.getKey(), entry.getValue());
                 }
             }
+
+            public ItemStatData add(ItemStatData stats){
+                add(stats.mMap);
+                return this;
+            }
+
+            @Override
+            public ItemStatData clone(){
+                ItemStatData data = new ItemStatData();
+                data.add(mMap);
+                return data;
+            }
+
             public void set(ItemStat stat, double value) {
                 if (value != 0) {
                     mMap.put(stat, value);
@@ -223,8 +251,8 @@ public class ItemStatManager {
             }
         }
 
-        private ItemStatData mArmorAddStats = new ItemStatData();
-        private ItemStatData mArmorMultiplyStats = new ItemStatData();
+        private ItemStatData mArmorStats = new ItemStatData();
+        private ItemStatData mMainhandStats = new ItemStatData();
         private ItemStatData mFinalStats = new ItemStatData();
         //TODO: Add mainhand stats
         public PlayerItemStats(Player player) {
@@ -235,12 +263,24 @@ public class ItemStatManager {
             return mFinalStats;
         }
 
-        public void updateStats(Player player){
-            //TODO: Add mainhand functionality
+
+        public void updateMainhandStats(Player player, ItemStack newMainhand){
+            ItemStatData newMainhandStats = new ItemStatData();
+
+            if(newMainhand != null && !newMainhand.isEmpty() && ItemStatUtils.getSlot(newMainhand) == EquipmentSlot.HAND){
+                Map<ItemStat, Double> itemStats = ItemStatUtils.getItemStats(newMainhand);
+                newMainhandStats.add(itemStats);
+                newMainhandStats.sort();
+            }
+            mMainhandStats = newMainhandStats;
+            updateFinalStats();
+        }
+
+        public void updateArmorStats(Player player){
             ItemStatData newArmorStats = new ItemStatData();
 
             //Get a list of items in the proper slot
-            List<ItemStack> applicableItems = ItemStatUtils.getItemsInCorrectSlot(player);
+            List<ItemStack> applicableItems = ItemStatUtils.getItemsInCorrectSlot(player, false);
 
             //Fetch the stats of the item
             for(ItemStack item : applicableItems){
@@ -249,8 +289,12 @@ public class ItemStatManager {
                 newArmorStats.add(itemStats);
                 newArmorStats.sort();
             }
-            mFinalStats = newArmorStats;
+            mArmorStats = newArmorStats;
+            updateFinalStats();
+        }
 
+        public void updateFinalStats(){
+            mFinalStats  = mArmorStats.clone().add(mMainhandStats);
         }
 
         public void tick(Player player, boolean twoHz, boolean oneHz){

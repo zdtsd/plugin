@@ -4,8 +4,10 @@ import io.github.z.plugin.Plugin;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.mobspells.testing.TestingLogOnHurt;
+import io.github.z.plugin.mobspells.passives.Gravedigger;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -24,6 +26,7 @@ public class MobSpellManager {
 
         // Register all mob spells here
         mAllSpells.add(TestingLogOnHurt.DATA);
+        mAllSpells.add(Gravedigger.DATA);
     }
 
     public static MobSpellManager getMobSpellManager() {
@@ -152,6 +155,14 @@ public class MobSpellManager {
         if (set == null) return;
         for (MobSpell spell : set.getSpells()) {
             spell.onReceiveEffect(event);
+        }
+    }
+
+    public static void onCreeperExplode(LivingEntity entity, EntityExplodeEvent event) {
+        MobSpellSet set = mobSpellManager.mSpells.get(entity.getUniqueId());
+        if (set == null) return;
+        for (MobSpell spell : set.getSpells()) {
+            spell.onCreeperExplode(event);
         }
     }
 

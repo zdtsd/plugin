@@ -1,15 +1,19 @@
 package io.github.z.plugin.listeners;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
+import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.ProjectileUtils;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -71,26 +75,64 @@ public class PlayerListener implements Listener {
         ItemStatManager.onDoubleJump(event.getPlayer(), event);
     }
 
+    private static final double FALL_DAMAGE_GRACE = 4.5;
+
     private Map<Player, Boolean> playerGroundedMap = new HashMap<>();
+
     @EventHandler
     public void playerMoveEvent(PlayerMoveEvent event){
-        Boolean wasGrounded = playerGroundedMap.putIfAbsent(event.getPlayer(), false);
-        Boolean isGrounded = event.getPlayer().isOnGround();
+        Player player = event.getPlayer();
+        Boolean wasGrounded = playerGroundedMap.putIfAbsent(player, false);
+        Boolean isGrounded = player.isOnGround();
         if(Boolean.FALSE.equals(wasGrounded) && isGrounded){
-            playerGroundedMap.put(event.getPlayer(), true);
-            PlayerLandsOnGroundEvent landingEvent = new PlayerLandsOnGroundEvent(event.getPlayer());
+            playerGroundedMap.put(player, true);
+            PlayerLandsOnGroundEvent landingEvent = new PlayerLandsOnGroundEvent(player);
             landingEvent.callEvent();
         }
         else if(Boolean.TRUE.equals(wasGrounded) && !isGrounded){
-            playerGroundedMap.put((event.getPlayer()), false);
+            playerGroundedMap.put(player, false);
         }
     }
 
     @EventHandler
     public void playerLandsOnGroundEvent(PlayerLandsOnGroundEvent event){
-        ItemStatManager.onPlayerLandsOnGround(event.getPlayer(), event);
-        AbilityManager.onPlayerLandsOnGround(event.getPlayer(), event);
-        EffectManager.onPlayerLandsOnGround(event.getPlayer(), event);
+        Player player = event.getPlayer();
+
+        double damage = player.getFallDistance() - FALL_DAMAGE_GRACE;
+        if (damage > 0) {
+            if (landedOnDripstone(player)) {
+                damage *= 2;
+            }
+            DamageUtils.nextMetadata = new DamageEvent.Metadata(DamageEvent.DamageType.FALL);
+            player.damage(damage);
+        }
+
+        ItemStatManager.onPlayerLandsOnGround(player, event);
+        AbilityManager.onPlayerLandsOnGround(player, event);
+        EffectManager.onPlayerLandsOnGround(player, event);
+    }
+
+
+    //TODO: Make this work (No damage is dealt when landing on dripstone for some reason)
+    private boolean landedOnDripstone(Player player) {
+        BoundingBox box = player.getBoundingBox();
+        int minX = (int) Math.floor(box.getMinX());
+        int maxX = (int) Math.floor(box.getMaxX());
+        int minZ = (int) Math.floor(box.getMinZ());
+        int maxZ = (int) Math.floor(box.getMaxZ());
+        int y = (int) Math.floor(box.getMinY()) - 1;
+        boolean foundDripstone = false;
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                Material type = player.getWorld().getBlockAt(x, y, z).getType();
+                if (type == Material.POINTED_DRIPSTONE) {
+                    foundDripstone = true;
+                } else if (type.isSolid()) {
+                    return false;
+                }
+            }
+        }
+        return foundDripstone;
     }
 
     @EventHandler
@@ -110,4 +152,16 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
         }
     }
+
+    @EventHandler
+    public void playerHandItemEvent(PlayerItemHeldEvent event){
+        ItemStatManager.updateMainhandStats(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getNewSlot()));
+    }
+
+    @EventHandler
+    public void playerArmorChangeEvent(PlayerArmorChangeEvent event){
+        ItemStatManager.updateArmorStats(event.getPlayer());
+    }
+
+
 }

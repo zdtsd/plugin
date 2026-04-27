@@ -28,7 +28,7 @@ public class Agility implements Enchantment {
 
     @Override
     public void onDoubleJump(Player player, PlayerToggleFlightEvent event, double level) {
-        if(mCanJump.get(player)){
+        if(mCanJump.get(player) != null){
             mCanJump.put(player, false);
             Vector jumpDirection = player.getLocation().getDirection();
             Vector jumpVelocity = VectorUtils.clampSlope(jumpDirection, 0.3, 3).normalize().multiply(speed);

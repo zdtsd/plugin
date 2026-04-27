@@ -33,11 +33,11 @@ public class DoubleJumpManager {
     }
     public void addDoubleJumpTokenLocal(Player player, String tokenID){
         List<DoubleJumpToken> playerTokens = mJumpTriggerTokens.get(player);
+        player.setAllowFlight(true);
         if(playerTokens == null){
             playerTokens = new ArrayList<>();
             playerTokens.add(new DoubleJumpToken(tokenID));
             mJumpTriggerTokens.put(player, playerTokens);
-            player.setAllowFlight(true);
         }
         else{
             //Only add new tokens when necessary.
@@ -46,7 +46,6 @@ public class DoubleJumpManager {
                     return;
                 }
             }
-
             playerTokens.add(new DoubleJumpToken(tokenID));
         }
     }

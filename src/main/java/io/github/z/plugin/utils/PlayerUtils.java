@@ -1,6 +1,9 @@
 package io.github.z.plugin.utils;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.itemstats.ItemStatManager;
+import io.github.z.plugin.itemstats.ItemStatUtils;
+import net.kyori.adventure.util.TriState;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
@@ -18,6 +21,12 @@ public class PlayerUtils {
 
         //TODO: Only do this if server has reset since player last login.
         removeAllAttributeModifiers(player);
+
+        //Ensure that fall damage is dealt to players
+        player.setFlyingFallDamage(TriState.TRUE);
+
+        //Load equipment stats
+        ItemStatManager.updateStats(player);
     }
 
     public static void removeAllAttributeModifiers(Player player){

@@ -109,7 +109,7 @@ public class ItemStatUtils {
     }
 
     //Returns a list of the items in their proper slot to grant stats to the player.
-    public static List<ItemStack> getItemsInCorrectSlot(Player player){
+    public static List<ItemStack> getItemsInCorrectSlot(Player player, boolean getMainhand){
         ItemStack mainhand = player.getInventory().getItem(EquipmentSlot.HAND);
         ItemStack offhand = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
         ItemStack head = player.getInventory().getItem(EquipmentSlot.HEAD);
@@ -133,7 +133,7 @@ public class ItemStatUtils {
         if(!offhand.isEmpty() && getSlot(offhand) == EquipmentSlot.OFF_HAND){
             applicableItems.add(offhand);
         }
-        if(!mainhand.isEmpty() && getSlot(mainhand) == EquipmentSlot.HAND){
+        if(getMainhand && !mainhand.isEmpty() && getSlot(mainhand) == EquipmentSlot.HAND){
             applicableItems.add(mainhand);
         }
 

@@ -32,7 +32,7 @@ public class Timer {
 
         if(fourHz){
             for(Player player : PlayerUtils.getOnlinePlayers()){
-                ItemStatManager.updateStats(player);
+                //ItemStatManager.updateStats(player);
                 ItemStatManager.tick(player, twoHz, oneHz);
                 AbilityManager.tick(player, twoHz, oneHz);
             }
