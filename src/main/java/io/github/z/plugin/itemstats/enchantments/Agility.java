@@ -23,9 +23,6 @@ public class Agility implements Enchantment {
     public String getName() {
         return "agility";
     }
-
-    //TODO: REMOVE DOUBLE JUMP TOKEN WHEN ITEM IS REMOVED
-
     @Override
     public void onDoubleJump(Player player, PlayerToggleFlightEvent event, double level) {
         if(mCanJump.get(player) != null){
@@ -41,5 +38,15 @@ public class Agility implements Enchantment {
     public void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event, double level) {
         mCanJump.put(player, true);
         DoubleJumpManager.addDoubleJumpToken(player, doubleJumpToken);
+    }
+    @Override
+    public void onRemove(Player player, double level){
+        DoubleJumpManager.removeDoubleJumpToken(player, doubleJumpToken);
+        mCanJump.put(player, false);
+    }
+    @Override
+    public void onAdd(Player player, double level){
+        DoubleJumpManager.addDoubleJumpToken(player, doubleJumpToken);
+        mCanJump.put(player, true);
     }
 }

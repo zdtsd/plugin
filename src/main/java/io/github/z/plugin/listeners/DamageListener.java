@@ -64,6 +64,16 @@ public class DamageListener implements Listener {
         if(damagee != null){
             EffectManager.onHurt(damagee, event);
         }
+
+        if(!event.isCancelled() && event.getDamage() >= damagee.getHealth()){
+            if(source instanceof Player player){
+                ItemStatManager.onKill(player, event, damagee);
+                AbilityManager.onKill(player, event, damagee);
+            }
+            if(source != null){
+                EffectManager.onKill(source, event, damagee);
+            }
+        }
     }
 
 

@@ -4,6 +4,7 @@ import io.github.z.plugin.GenericPlayerModifier;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -46,6 +47,10 @@ public abstract class Ability {
     }
 
     public void onClick(PlayerInteractEvent event){
+
+    }
+
+    public void onKill(DamageEvent event, LivingEntity damagee){
 
     }
 

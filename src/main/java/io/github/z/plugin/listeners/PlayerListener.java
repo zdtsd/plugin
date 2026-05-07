@@ -73,6 +73,7 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
         }
         ItemStatManager.onDoubleJump(event.getPlayer(), event);
+        EffectManager.onDoubleJump(event.getPlayer(), event);
     }
 
     private static final double FALL_DAMAGE_GRACE = 4.5;

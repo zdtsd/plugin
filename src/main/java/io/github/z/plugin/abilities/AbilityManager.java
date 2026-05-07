@@ -12,6 +12,7 @@ import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.utils.AbilityUtils;
 import io.github.z.plugin.utils.ScoreboardUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -141,6 +142,12 @@ public class AbilityManager {
     public static void onPlayerLandsOnGround(Player player, PlayerLandsOnGroundEvent event){
         for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
             ability.onPlayerLandsOnGround(event);
+        }
+    }
+
+    public static void onKill(Player player, DamageEvent event, LivingEntity damagee){
+        for(Ability ability : abilityManager.mAbilities.get(player).getAbilities()){
+            ability.onKill(event, damagee);
         }
     }
 

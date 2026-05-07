@@ -19,6 +19,10 @@ public interface ItemStat extends GenericPlayerModifier {
     }
 
 
+    default void onAdd(Player player, double level){}
+
+    default void onRemove(Player player, double level){}
+
     //Used to mask real stats with dummy stats, runs only when the item is updated
     default void onUpdate(ItemStack item, double level){
         return;

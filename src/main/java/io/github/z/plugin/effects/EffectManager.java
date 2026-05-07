@@ -7,7 +7,9 @@ import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -187,6 +189,22 @@ public class EffectManager {
         EffectSet set = mInstance.getOrCreateEffectSet(entity);
         for(Effect effect : set.getActiveEffects()){
             effect.onDamage(entity, event, effect.getStrength());
+        }
+    }
+
+    public static void onKill(Entity killer, DamageEvent event, LivingEntity damagee){
+        EffectSet set = mInstance.getOrCreateEffectSet(killer);
+        for(Effect effect : set.getActiveEffects()){
+            effect.onKill(killer, event, damagee, effect.getStrength());
+        }
+    }
+
+    public static void onDoubleJump(Player player, PlayerToggleFlightEvent event){
+        EffectSet set = mInstance.getOrCreateEffectSet(player);
+        for(Effect effect : set.getActiveEffects()){
+            if(effect instanceof PlayerEffect playerEffect){
+                playerEffect.onDoubleJump(player, event, playerEffect.getStrength());
+            }
         }
     }
 }

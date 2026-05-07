@@ -24,6 +24,7 @@ public enum EnchantmentType {
     FIRE_PROTECTION(new FireProtection(), "Fire Protection", true, false),
     BLAST_PROTECTION(new BlastProtection(), "Blast Protection", true, false),
     AGILITY(new Agility(), "Agility", false, false),
+    KINETIC_BOOST(new KineticBoost(), "Kinetic Boost", false, false),
     THUNDER_ASPECT(new ThunderAspect(), "Thunder Aspect", true, false),
     DOUBLE_DAMAGE(new DoubleDamage(), "Double Damage", false, false),
 

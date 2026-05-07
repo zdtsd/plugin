@@ -64,6 +64,7 @@ public final class Plugin extends JavaPlugin {
         new OpenClassGUICommand().register();
         new LibraryOfSoulsCommand().register();
         new BookOfSoulsCommand().register();
+        new EffectCommand().register();
         Timer.setPlugin(this);
 
         for(ItemStat stat : ItemStatUtils.getAllStats()){

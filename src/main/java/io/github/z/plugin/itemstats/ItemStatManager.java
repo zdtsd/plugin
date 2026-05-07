@@ -5,6 +5,7 @@ import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -164,6 +165,14 @@ public class ItemStatManager {
         }
     }
 
+    public static void onKill(Player player, DamageEvent event, LivingEntity damagee){
+        if(playerStats.containsKey(player.getUniqueId())){
+            for(Map.Entry<ItemStat, Double> entry : playerStats.get(player.getUniqueId()).getItemStats()){
+                entry.getKey().onKill(player, event, damagee, entry.getValue());
+            }
+        }
+    }
+
 
 
     public static class PlayerItemStats{
@@ -273,7 +282,7 @@ public class ItemStatManager {
                 newMainhandStats.sort();
             }
             mMainhandStats = newMainhandStats;
-            updateFinalStats();
+            updateFinalStats(player);
         }
 
         public void updateArmorStats(Player player){
@@ -290,11 +299,28 @@ public class ItemStatManager {
                 newArmorStats.sort();
             }
             mArmorStats = newArmorStats;
-            updateFinalStats();
+            updateFinalStats(player);
         }
 
-        public void updateFinalStats(){
-            mFinalStats  = mArmorStats.clone().add(mMainhandStats);
+        public Map<ItemStat, double[]> updateFinalStats(Player player){
+            ItemStatData oldFinalStats = mFinalStats;
+            mFinalStats = mArmorStats.clone().add(mMainhandStats);
+
+            Set<ItemStat> allStats = new LinkedHashSet<>();
+            for (Map.Entry<ItemStat, Double> entry : oldFinalStats) allStats.add(entry.getKey());
+            for (Map.Entry<ItemStat, Double> entry : mFinalStats) allStats.add(entry.getKey());
+
+            Map<ItemStat, double[]> changes = new LinkedHashMap<>();
+            for (ItemStat stat : allStats) {
+                double oldValue = oldFinalStats.get(stat);
+                double newValue = mFinalStats.get(stat);
+                if (oldValue != newValue) {
+                    changes.put(stat, new double[]{oldValue, newValue});
+                    if (newValue == 0 && oldValue != 0) stat.onRemove(player, oldValue);
+                    if (oldValue == 0 && newValue != 0) stat.onAdd(player, newValue);
+                }
+            }
+            return changes;
         }
 
         public void tick(Player player, boolean twoHz, boolean oneHz){

@@ -5,6 +5,7 @@ import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 
@@ -73,6 +74,10 @@ public interface GenericEntityModifier {
     }
 
     default void onPlayerLandsOnGround(Entity entity, PlayerLandsOnGroundEvent event, double level){
+
+    }
+
+    default void onKill(Entity killer, DamageEvent event, LivingEntity damagee, double level){
 
     }
 }
