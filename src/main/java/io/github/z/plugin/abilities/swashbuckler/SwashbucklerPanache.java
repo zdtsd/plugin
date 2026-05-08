@@ -4,6 +4,7 @@ import io.github.z.plugin.abilities.Ability;
 import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
+import io.github.z.plugin.effects.effects.FeatherFallingEffect;
 import io.github.z.plugin.effects.effects.StunEffect;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
@@ -26,6 +27,7 @@ public class SwashbucklerPanache extends Ability {
 
     private static final double mMinFallDistance = 5, mRadius = 5, mDamage = 10;
     private static final int mStunDuration = 20 * 2;
+    private static final int mFeatherFallingDuration = 10;
     private static final Particle mParticle = Particle.EXPLOSION;
     private static final int mParticleCount = 12;
 
@@ -47,11 +49,22 @@ public class SwashbucklerPanache extends Ability {
     }
 
     @Override
+    public void onDamage(DamageEvent event) {
+        if (!event.isType(DamageEvent.DamageType.MELEE_ATTACK)) {
+            return;
+        }
+        EffectManager.applyEffect(mPlayer, new FeatherFallingEffect(mFeatherFallingDuration, 1), DATA.getName());
+    }
+
+    @Override
     public void onPlayerLandsOnGround(PlayerLandsOnGroundEvent event) {
         if (mPlayer.getFallDistance() <= mMinFallDistance) {
             return;
         }
+        doSlam();
+    }
 
+    private void doSlam(){
         boolean offensiveStance = getOrFetchStance().getStance() == SwashbucklerStance.SwashbucklerStanceType.OFFENSIVE;
 
         for (Entity entity : EntityUtils.getEntitiesInSphere(mPlayer.getLocation(), mRadius)) {
@@ -71,6 +84,5 @@ public class SwashbucklerPanache extends Ability {
                 .setParticle(mParticle)
                 .setCount(mParticleCount)
                 .generateParticles();
-
     }
 }

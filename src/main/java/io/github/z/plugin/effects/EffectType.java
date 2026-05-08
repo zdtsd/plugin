@@ -9,7 +9,8 @@ public enum EffectType {
     MOVE_SPEED("move_speed", BaseMoveSpeedModifyEffect::new),
     STUN("stun", StunEffect::new),
     SLOW_FALLING("slow_falling", FallSpeedEffect::new),
-    AGILITY("agility", AgilityEffect::new);
+    AGILITY("agility", AgilityEffect::new),
+    FEATHER_FALLING("feather_falling", FeatherFallingEffect::new);
 
     private final String name;
     private final BiFunction<Integer, Integer, Effect> factory;
