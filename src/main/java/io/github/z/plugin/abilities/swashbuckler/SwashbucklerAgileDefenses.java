@@ -4,7 +4,7 @@ import io.github.z.plugin.abilities.Ability;
 import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
-import io.github.z.plugin.effects.StunEffect;
+import io.github.z.plugin.effects.effects.StunEffect;
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.Material;

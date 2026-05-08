@@ -1,5 +1,6 @@
-package io.github.z.plugin.effects;
+package io.github.z.plugin.effects.effects;
 
+import io.github.z.plugin.effects.Effect;
 import io.github.z.plugin.events.DamageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;

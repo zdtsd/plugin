@@ -5,8 +5,8 @@ import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.abilities.CooldownAbility;
 import io.github.z.plugin.effects.EffectManager;
-import io.github.z.plugin.effects.FallSpeedEffect;
-import io.github.z.plugin.effects.StunEffect;
+import io.github.z.plugin.effects.effects.FallSpeedEffect;
+import io.github.z.plugin.effects.effects.StunEffect;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.particles.CircleParticleSet;
 import io.github.z.plugin.utils.DamageUtils;
@@ -16,9 +16,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import java.util.Collection;
 

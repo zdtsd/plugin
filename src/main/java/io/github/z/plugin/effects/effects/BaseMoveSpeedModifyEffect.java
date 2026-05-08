@@ -1,6 +1,7 @@
-package io.github.z.plugin.effects;
+package io.github.z.plugin.effects.effects;
 
 import io.github.z.plugin.Plugin;
+import io.github.z.plugin.effects.Effect;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseMoveSpeedModifyEffect extends Effect{
+public class BaseMoveSpeedModifyEffect extends Effect {
 
     private NamespacedKey key = new NamespacedKey(Plugin.getPlugin(), "MoveSpdMod");
 

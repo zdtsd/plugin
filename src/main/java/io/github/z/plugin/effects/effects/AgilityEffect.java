@@ -1,5 +1,7 @@
-package io.github.z.plugin.effects;
+package io.github.z.plugin.effects.effects;
 
+import io.github.z.plugin.effects.Effect;
+import io.github.z.plugin.effects.PlayerEffect;
 import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.utils.DoubleJumpManager;
 import io.github.z.plugin.utils.EntityUtils;
@@ -69,4 +71,6 @@ public class AgilityEffect extends PlayerEffect {
         lines.add(getName() + " " + mStrength + "||" + mDuration);
         return lines;
     }
+
+
 }

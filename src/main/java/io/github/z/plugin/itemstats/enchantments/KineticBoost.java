@@ -1,6 +1,6 @@
 package io.github.z.plugin.itemstats.enchantments;
 
-import io.github.z.plugin.effects.AgilityEffect;
+import io.github.z.plugin.effects.effects.AgilityEffect;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Enchantment;

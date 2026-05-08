@@ -1,14 +1,13 @@
-package io.github.z.plugin.effects;
+package io.github.z.plugin.effects.effects;
 
-import com.bergerkiller.bukkit.common.math.Vector3;
 import io.github.z.plugin.Plugin;
+import io.github.z.plugin.effects.Effect;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.BlockDisplay;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO: Refactor stun away from NoAI to a custom noAI system.
-public class StunEffect extends Effect{
+public class StunEffect extends Effect {
 
     public static final String stunNamespace = "Stun";
     private NamespacedKey key = new NamespacedKey(Plugin.getPlugin(), "StnSpdMod");

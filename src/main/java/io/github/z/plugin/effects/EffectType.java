@@ -1,5 +1,7 @@
 package io.github.z.plugin.effects;
 
+import io.github.z.plugin.effects.effects.*;
+
 import java.util.function.BiFunction;
 
 public enum EffectType {

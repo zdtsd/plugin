@@ -1,6 +1,7 @@
-package io.github.z.plugin.effects;
+package io.github.z.plugin.effects.effects;
 
 import io.github.z.plugin.Plugin;
+import io.github.z.plugin.effects.Effect;
 import io.github.z.plugin.utils.EntityUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attributable;
@@ -8,7 +9,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Entity;
 
-public class FallSpeedEffect extends Effect{
+public class FallSpeedEffect extends Effect {
     public FallSpeedEffect(int duration, int strength) {
         super(duration, strength);
     }

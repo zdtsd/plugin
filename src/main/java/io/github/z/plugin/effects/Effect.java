@@ -48,7 +48,7 @@ public abstract class Effect implements GenericEntityModifier, Comparable<Effect
         }
     }
 
-    List<String> getSidebarLines(){return new ArrayList<>();}
+    public List<String> getSidebarLines(){return new ArrayList<>();}
 
 
     public void onEffectRemove(Effect newEffect, Entity entity){

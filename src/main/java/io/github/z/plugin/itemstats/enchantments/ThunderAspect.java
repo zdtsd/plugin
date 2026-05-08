@@ -1,12 +1,10 @@
 package io.github.z.plugin.itemstats.enchantments;
 
 import io.github.z.plugin.effects.EffectManager;
-import io.github.z.plugin.effects.StunEffect;
+import io.github.z.plugin.effects.effects.StunEffect;
 import io.github.z.plugin.events.DamageEvent;
 import io.github.z.plugin.itemstats.Enchantment;
 import org.bukkit.entity.Entity;
-
-import java.util.Random;
 
 public class ThunderAspect implements Enchantment {
 

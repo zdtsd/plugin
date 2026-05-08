@@ -3,7 +3,7 @@ package io.github.z.plugin.abilities.testing;
 import io.github.z.plugin.abilities.AbilityData;
 import io.github.z.plugin.abilities.CooldownAbility;
 import io.github.z.plugin.effects.EffectManager;
-import io.github.z.plugin.effects.BaseMoveSpeedModifyEffect;
+import io.github.z.plugin.effects.effects.BaseMoveSpeedModifyEffect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
