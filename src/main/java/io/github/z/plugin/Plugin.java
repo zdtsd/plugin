@@ -44,6 +44,7 @@ public final class Plugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
         Bukkit.getPluginManager().registerEvents(new BookOfSoulsListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SpawnerListener(), this);
 
         //Set up utils.
         mLibraryOfSoulsManager = new LibraryOfSoulsManager();

@@ -14,6 +14,7 @@ public class BookOfSoulsUtils {
 
     public static final NamespacedKey BOS_MARKER_KEY = new NamespacedKey(Plugin.getPlugin(), "book_of_souls");
     public static final NamespacedKey BOS_ID_KEY = new NamespacedKey(Plugin.getPlugin(), "book_of_souls_id");
+    public static final NamespacedKey SPAWNER_SOUL_KEY = new NamespacedKey(Plugin.getPlugin(), "spawner_soul_id");
 
     public static ItemStack createBookOfSouls(String id) {
         ItemStack item = new ItemStack(Material.BOOK);
