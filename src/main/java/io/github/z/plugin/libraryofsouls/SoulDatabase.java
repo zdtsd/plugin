@@ -26,6 +26,7 @@ public class SoulDatabase {
         try {
             mConnection = DriverManager.getConnection(url);
             createTable();
+            migrateTable();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to connect to Library of Souls database", e);
         }
@@ -38,7 +39,8 @@ public class SoulDatabase {
                 "max_health REAL NOT NULL, " +
                 "attack_damage REAL NOT NULL, " +
                 "movement_speed REAL NOT NULL, " +
-                "mob_spells TEXT NOT NULL" +
+                "mob_spells TEXT NOT NULL, " +
+                "entity_data TEXT NOT NULL DEFAULT ''" +
                 ")";
         try (Statement stmt = mConnection.createStatement()) {
             stmt.execute(sql);
@@ -47,8 +49,17 @@ public class SoulDatabase {
         }
     }
 
+    private void migrateTable() {
+        // Adds entity_data column to databases created before this column existed.
+        try (Statement stmt = mConnection.createStatement()) {
+            stmt.execute("ALTER TABLE " + TABLE + " ADD COLUMN entity_data TEXT NOT NULL DEFAULT ''");
+        } catch (SQLException ignored) {
+            // Column already exists — safe to ignore.
+        }
+    }
+
     public void insertSoul(Soul soul) {
-        String sql = "INSERT INTO " + TABLE + " (id, entity_type, max_health, attack_damage, movement_speed, mob_spells) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + TABLE + " (id, entity_type, max_health, attack_damage, movement_speed, mob_spells, entity_data) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = mConnection.prepareStatement(sql)) {
             stmt.setString(1, soul.getId());
             stmt.setString(2, soul.getType().name());
@@ -56,6 +67,7 @@ public class SoulDatabase {
             stmt.setDouble(4, soul.getAttackDamage());
             stmt.setDouble(5, soul.getMovementSpeed());
             stmt.setString(6, serializeMobSpells(soul.getMobSpells()));
+            stmt.setString(7, serializeEntityData(soul.getEntityData()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to insert soul: " + soul.getId(), e);
@@ -91,14 +103,15 @@ public class SoulDatabase {
     }
 
     public void updateSoul(Soul soul) {
-        String sql = "UPDATE " + TABLE + " SET entity_type = ?, max_health = ?, attack_damage = ?, movement_speed = ?, mob_spells = ? WHERE id = ?";
+        String sql = "UPDATE " + TABLE + " SET entity_type = ?, max_health = ?, attack_damage = ?, movement_speed = ?, mob_spells = ?, entity_data = ? WHERE id = ?";
         try (PreparedStatement stmt = mConnection.prepareStatement(sql)) {
             stmt.setString(1, soul.getType().name());
             stmt.setDouble(2, soul.getMaxHealth());
             stmt.setDouble(3, soul.getAttackDamage());
             stmt.setDouble(4, soul.getMovementSpeed());
             stmt.setString(5, serializeMobSpells(soul.getMobSpells()));
-            stmt.setString(6, soul.getId());
+            stmt.setString(6, serializeEntityData(soul.getEntityData()));
+            stmt.setString(7, soul.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to update soul: " + soul.getId(), e);
@@ -157,7 +170,8 @@ public class SoulDatabase {
         double attackDamage = rs.getDouble("attack_damage");
         double movementSpeed = rs.getDouble("movement_speed");
         Map<String, Integer> mobSpells = deserializeMobSpells(rs.getString("mob_spells"));
-        return new Soul(id, type, maxHealth, attackDamage, movementSpeed, mobSpells);
+        Map<String, String> entityData = deserializeEntityData(rs.getString("entity_data"));
+        return new Soul(id, type, maxHealth, attackDamage, movementSpeed, mobSpells, entityData);
     }
 
     // Serializes as: spellName1=level1;spellName2=level2;...
@@ -178,6 +192,28 @@ public class SoulDatabase {
             String[] parts = entry.split("=", 2);
             if (parts.length == 2) {
                 map.put(parts[0], Integer.parseInt(parts[1]));
+            }
+        }
+        return map;
+    }
+
+    // Serializes as: key1=value1;key2=value2;...
+    private String serializeEntityData(Map<String, String> entityData) {
+        if (entityData.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : entityData.entrySet()) {
+            sb.append(entry.getKey()).append("=").append(entry.getValue()).append(";");
+        }
+        return sb.toString();
+    }
+
+    private Map<String, String> deserializeEntityData(String raw) {
+        Map<String, String> map = new HashMap<>();
+        if (raw == null || raw.isEmpty()) return map;
+        for (String entry : raw.split(";")) {
+            String[] parts = entry.split("=", 2);
+            if (parts.length == 2) {
+                map.put(parts[0], parts[1]);
             }
         }
         return map;

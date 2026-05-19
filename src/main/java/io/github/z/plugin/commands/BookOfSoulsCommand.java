@@ -3,9 +3,14 @@ package io.github.z.plugin.commands;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.*;
+import io.github.z.plugin.libraryofsouls.EntityDataKey;
 import io.github.z.plugin.libraryofsouls.LibraryOfSoulsAPI;
+import io.github.z.plugin.libraryofsouls.Soul;
 import io.github.z.plugin.mobspells.MobSpellManager;
 import org.bukkit.entity.EntityType;
+
+import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 import static io.github.z.plugin.libraryofsouls.LibraryOfSoulsAPI.soulIdArgument;
 
@@ -59,6 +64,29 @@ public class BookOfSoulsCommand {
                         .withPermission(CommandPermission.OP)
                         .executesPlayer((player, args) -> {
                             LibraryOfSoulsAPI.getInstance().setAbility((String) args.get("id"), (String) args.get("mobSpell"), (int) args.get("level"));
+                        }))
+                .withSubcommand(new CommandAPICommand("entity")
+                        .withArguments(
+                                soulIdArgument("id"),
+                                new StringArgument("key")
+                                        .replaceSuggestions(ArgumentSuggestions.stringsAsync(info ->
+                                                CompletableFuture.supplyAsync(() -> {
+                                                    String soulId = (String) info.previousArgs().get("id");
+                                                    Soul soul = LibraryOfSoulsAPI.getInstance().getDatabase().getSoul(soulId);
+                                                    if (soul == null) return new String[0];
+                                                    return Arrays.stream(EntityDataKey.forType(soul.getType()))
+                                                            .map(EntityDataKey::getKey)
+                                                            .toArray(String[]::new);
+                                                })
+                                        )),
+                                new StringArgument("value"))
+                        .withPermission(CommandPermission.OP)
+                        .executesPlayer((player, args) -> {
+                            LibraryOfSoulsAPI.getInstance().setEntityData(
+                                    (String) args.get("id"),
+                                    (String) args.get("key"),
+                                    (String) args.get("value")
+                            );
                         }))
                 .register();
     }

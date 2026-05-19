@@ -16,6 +16,7 @@ public class Soul {
     private double mAttackDamage;
     private double mMovementSpeed;
     private Map<String, Integer> mMobSpells;
+    private Map<String, String> mEntityData;
 
     public Soul(String id, EntityType type) {
         mId = id;
@@ -24,6 +25,7 @@ public class Soul {
         mAttackDamage = DEFAULT_ATTACK_DAMAGE;
         mMovementSpeed = DEFAULT_MOVEMENT_SPEED;
         mMobSpells = new HashMap<>();
+        mEntityData = new HashMap<>();
     }
 
     public Soul(String id, EntityType type, double maxHealth, double attackDamage, double movementSpeed, Map<String, Integer> mobSpells) {
@@ -33,6 +35,17 @@ public class Soul {
         mAttackDamage = attackDamage;
         mMovementSpeed = movementSpeed;
         mMobSpells = new HashMap<>(mobSpells);
+        mEntityData = new HashMap<>();
+    }
+
+    public Soul(String id, EntityType type, double maxHealth, double attackDamage, double movementSpeed, Map<String, Integer> mobSpells, Map<String, String> entityData) {
+        mId = id;
+        mType = type;
+        mMaxHealth = maxHealth;
+        mAttackDamage = attackDamage;
+        mMovementSpeed = movementSpeed;
+        mMobSpells = new HashMap<>(mobSpells);
+        mEntityData = new HashMap<>(entityData);
     }
 
     public String getId() { return mId; }
@@ -60,4 +73,10 @@ public class Soul {
             mMobSpells.put(spellName, level);
         }
     }
+
+    public Map<String, String> getEntityData() { return mEntityData; }
+    public void setEntityData(Map<String, String> entityData) { mEntityData = new HashMap<>(entityData); }
+
+    public String getEntityDataValue(String key) { return mEntityData.get(key); }
+    public void setEntityDataValue(String key, String value) { mEntityData.put(key, value); }
 }

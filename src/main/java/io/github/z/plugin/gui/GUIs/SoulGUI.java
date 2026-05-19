@@ -2,6 +2,7 @@ package io.github.z.plugin.gui.GUIs;
 
 import io.github.z.plugin.gui.GUI;
 import io.github.z.plugin.gui.GUIButton;
+import io.github.z.plugin.libraryofsouls.EntityDataKey;
 import io.github.z.plugin.libraryofsouls.Soul;
 import io.github.z.plugin.protocollib.ProtocolLibUtils;
 import net.kyori.adventure.text.Component;
@@ -112,5 +113,24 @@ public class SoulGUI extends GUI {
             }
         }
         spellsButton.addToGUI(this, 5);
+
+        // Slots 6+ — entity-specific data (only keys applicable to this soul's entity type)
+        EntityDataKey[] entityKeys = EntityDataKey.forType(mSoul.getType());
+        for (int i = 0; i < entityKeys.length; i++) {
+            EntityDataKey dataKey = entityKeys[i];
+            String currentValue = mSoul.getEntityDataValue(dataKey.getKey());
+            String displayValue = currentValue != null ? currentValue : dataKey.getDefaultValue();
+            new GUIButton()
+                    .setMaterial(dataKey.getMaterial())
+                    .setName(Component.text(dataKey.getDisplayName()))
+                    .addLore(Component.text(displayValue))
+                    .addHandler(event -> {
+                        if (event.getWhoClicked() instanceof Player player) {
+                            player.closeInventory();
+                            ProtocolLibUtils.autofillChat(player, "/bos entity " + id + " " + dataKey.getKey() + " ");
+                        }
+                    })
+                    .addToGUI(this, 6 + i);
+        }
     }
 }

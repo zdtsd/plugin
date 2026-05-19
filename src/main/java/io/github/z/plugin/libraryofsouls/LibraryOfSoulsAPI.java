@@ -105,6 +105,13 @@ public class LibraryOfSoulsAPI {
         mDatabase.updateSoul(soul);
     }
 
+    public void setEntityData(String id, String key, String value) {
+        Soul soul = mDatabase.getSoul(id);
+        if (soul == null) return;
+        soul.setEntityDataValue(key, value);
+        mDatabase.updateSoul(soul);
+    }
+
     public void openSoulGUI(Player player, String id) {
         Soul soul = mDatabase.getSoul(id);
         if (soul == null) return;
@@ -118,6 +125,11 @@ public class LibraryOfSoulsAPI {
         entity.setHealth(soul.getMaxHealth());
         setAttribute(entity, Attribute.GENERIC_ATTACK_DAMAGE, soul.getAttackDamage());
         setAttribute(entity, Attribute.GENERIC_MOVEMENT_SPEED, soul.getMovementSpeed());
+
+        for (java.util.Map.Entry<String, String> entry : soul.getEntityData().entrySet()) {
+            EntityDataKey key = EntityDataKey.fromKey(entry.getKey());
+            if (key != null) key.apply(entity, entry.getValue());
+        }
 
         if (!soul.getMobSpells().isEmpty()) {
             MobSpellManager.applySpells(entity, soul.getMobSpells());
