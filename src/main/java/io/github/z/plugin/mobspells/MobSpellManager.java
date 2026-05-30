@@ -3,8 +3,9 @@ package io.github.z.plugin.mobspells;
 import io.github.z.plugin.Plugin;
 import io.github.z.plugin.events.ApplyEffectEvent;
 import io.github.z.plugin.events.DamageEvent;
-import io.github.z.plugin.mobspells.testing.TestingLogOnHurt;
+import io.github.z.plugin.mobspells.active.KillSpell;
 import io.github.z.plugin.mobspells.passives.Gravedigger;
+import io.github.z.plugin.mobspells.testing.TestingLogOnHurt;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -27,6 +28,7 @@ public class MobSpellManager {
         // Register all mob spells here
         mAllSpells.add(TestingLogOnHurt.DATA);
         mAllSpells.add(Gravedigger.DATA);
+        mAllSpells.add(KillSpell.DATA);
     }
 
     public static MobSpellManager getMobSpellManager() {
@@ -54,7 +56,7 @@ public class MobSpellManager {
         }
 
         PersistentDataContainer spellsContainer = pdc.get(SPELLS_KEY, PersistentDataType.TAG_CONTAINER);
-        MobSpellSet spellSet = new MobSpellSet();
+        List<MobSpell> collected = new ArrayList<>();
 
         for (MobSpellData<?> data : mAllSpells) {
             NamespacedKey spellKey = new NamespacedKey(Plugin.getPlugin(), data.getName().toLowerCase());
@@ -63,14 +65,19 @@ public class MobSpellManager {
                 if (level != 0) {
                     MobSpell spell = data.getNewInstance(entity);
                     spell.setLevel(level);
-                    spellSet.addSpell(spell);
+                    collected.add(spell);
                 }
             }
         }
 
-        if (!spellSet.getSpells().isEmpty()) {
-            mSpells.put(entity.getUniqueId(), spellSet);
+        if (collected.isEmpty()) return;
+
+        boolean hasCooldownSpell = collected.stream().anyMatch(s -> s instanceof CooldownMobSpell);
+        MobSpellSet spellSet = hasCooldownSpell ? new StandardManagedMobSpellSet() : new MobSpellSet();
+        for (MobSpell spell : collected) {
+            spellSet.addSpell(spell);
         }
+        mSpells.put(entity.getUniqueId(), spellSet);
     }
 
     /**
@@ -116,6 +123,7 @@ public class MobSpellManager {
                 toRemove.add(entry.getKey());
                 continue;
             }
+            entry.getValue().tick();
             for (MobSpell spell : spells) {
                 spell.tick(entity, twoHz, oneHz);
             }

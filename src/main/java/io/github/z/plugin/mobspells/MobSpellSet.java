@@ -13,4 +13,6 @@ public class MobSpellSet {
     public List<MobSpell> getSpells() {
         return mSpells;
     }
+
+    public void tick() {}
 }
