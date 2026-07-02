@@ -53,7 +53,9 @@ public class ClassGUI extends GUI {
                 .setMaterial(Material.TRIDENT)
                 .setName(Component.text("Stormcaller"))
                 .addHandler((clickEvent) -> {
-                    Bukkit.getLogger().info("Stormcaller selected!");
+                    if(clickEvent.getWhoClicked() instanceof Player player){
+                        new StormcallerClassGUI(player, StormcallerClassGUI.GUI_SIZE);
+                    }
                 })
                 .addToGUI(this, 6);
     }

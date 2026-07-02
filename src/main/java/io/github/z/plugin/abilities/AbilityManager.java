@@ -1,6 +1,11 @@
 package io.github.z.plugin.abilities;
 
+import io.github.z.plugin.abilities.stormcaller.StormcallerBoltwave;
+import io.github.z.plugin.abilities.stormcaller.StormcallerStaticCharge;
+import io.github.z.plugin.abilities.stormcaller.StormcallerStrikeTwice;
+import io.github.z.plugin.abilities.stormcaller.StormcallerZap;
 import io.github.z.plugin.abilities.swashbuckler.*;
+import io.github.z.plugin.abilities.testing.TestingAbilityArcParticle;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
@@ -34,6 +39,7 @@ public class AbilityManager {
         mAllAbilities.add(TestingAbilityThree.DATA);
         mAllAbilities.add(TestingAbilityWeakness.DATA);
         mAllAbilities.add(TestingCutscene.DATA);
+        mAllAbilities.add(TestingAbilityArcParticle.DATA);
         mAllAbilities.add(SwashbucklerStance.DATA);
         mAllAbilities.add(SwashbucklerReposition.DATA);
         mAllAbilities.add(SwashbuckerShieldBash.DATA);
@@ -42,6 +48,10 @@ public class AbilityManager {
         mAllAbilities.add(SwashbucklerRiposte.DATA);
         mAllAbilities.add(SwashbucklerAgileDefenses.DATA);
         mAllAbilities.add(SwashbucklerPanache.DATA);
+        mAllAbilities.add(StormcallerStaticCharge.DATA);
+        mAllAbilities.add(StormcallerZap.DATA);
+        mAllAbilities.add(StormcallerBoltwave.DATA);
+        mAllAbilities.add(StormcallerStrikeTwice.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){

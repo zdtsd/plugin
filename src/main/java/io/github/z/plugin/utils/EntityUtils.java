@@ -8,6 +8,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -100,6 +101,10 @@ public class EntityUtils {
         }
         vertices.add(entity.getBoundingBox().getCenter());
         return vertices;
+    }
+
+    public static double getFallDistance(Entity e){
+        return e.getFallDistance();
     }
 
 

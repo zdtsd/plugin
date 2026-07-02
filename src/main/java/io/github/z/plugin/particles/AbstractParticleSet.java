@@ -1,6 +1,7 @@
 package io.github.z.plugin.particles;
 
 import com.destroystokyo.paper.ParticleBuilder;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 
 public abstract class AbstractParticleSet<T extends AbstractParticleSet<T>> {
@@ -10,6 +11,7 @@ public abstract class AbstractParticleSet<T extends AbstractParticleSet<T>> {
     protected double mDeltaY = 0;
     protected double mDeltaZ = 0;
     protected double mExtra = 0;
+    protected Color mColor = Color.WHITE;
 
 
     private T getSpecificSelf(){
@@ -40,6 +42,11 @@ public abstract class AbstractParticleSet<T extends AbstractParticleSet<T>> {
 
     public T setExtra(double extra){
         mExtra = extra;
+        return getSpecificSelf();
+    }
+
+    public T setColor(Color color){
+        mColor = color;
         return getSpecificSelf();
     }
 

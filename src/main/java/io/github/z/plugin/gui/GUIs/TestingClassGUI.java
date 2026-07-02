@@ -1,6 +1,7 @@
 package io.github.z.plugin.gui.GUIs;
 
 import io.github.z.plugin.abilities.AbilityManager;
+import io.github.z.plugin.abilities.testing.TestingAbilityArcParticle;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
 import io.github.z.plugin.abilities.testing.TestingAbilityThree;
 import io.github.z.plugin.abilities.testing.TestingAbilityTwo;
@@ -36,6 +37,7 @@ public class TestingClassGUI extends AbilitySelectGUI {
         createClassAbilityButton(TestingAbilityThree.DATA, 49);
         createClassAbilityButton(TestingAbilityWeakness.DATA, 4);
         createClassAbilityButton(TestingCutscene.DATA, 22);
+        createClassAbilityButton(TestingAbilityArcParticle.DATA, 40);
     }
 
 
