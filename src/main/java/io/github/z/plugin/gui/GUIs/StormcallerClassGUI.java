@@ -1,9 +1,6 @@
 package io.github.z.plugin.gui.GUIs;
 
-import io.github.z.plugin.abilities.stormcaller.StormcallerBoltwave;
-import io.github.z.plugin.abilities.stormcaller.StormcallerStaticCharge;
-import io.github.z.plugin.abilities.stormcaller.StormcallerStrikeTwice;
-import io.github.z.plugin.abilities.stormcaller.StormcallerZap;
+import io.github.z.plugin.abilities.stormcaller.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,5 +26,6 @@ public class StormcallerClassGUI extends AbilitySelectGUI {
         createClassAbilityButton(StormcallerZap.DATA, 13);
         createClassAbilityButton(StormcallerBoltwave.DATA, 22);
         createClassAbilityButton(StormcallerStrikeTwice.DATA, 31);
+        createClassAbilityButton(StormcallerVoltstep.DATA, 40);
     }
 }

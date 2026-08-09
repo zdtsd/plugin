@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class EffectManager {
+    //TODO: Serialize effects on logout to save for next login
 
     private class EffectSet{
         //mEffects stored lists of effects under string keys that indicate the source of the ability. In each namespace, only the highest

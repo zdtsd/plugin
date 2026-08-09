@@ -12,6 +12,7 @@ import io.github.z.plugin.protocollib.ProtocolLibManager;
 import io.github.z.plugin.sidebar.SidebarManager;
 import io.github.z.plugin.utils.DoubleJumpManager;
 import io.github.z.plugin.utils.ProjectileUtils;
+import io.github.z.plugin.utils.TrueFlightManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class Plugin extends JavaPlugin {
     private static MobSpellManager mMobSpellManager;
     private static SidebarManager mSidebarManager;
     private static DoubleJumpManager mDoubleJumpManager;
+    private static TrueFlightManager mTrueFlightManager;
     private static EffectManager mEffectManager;
     private static LibraryOfSoulsManager mLibraryOfSoulsManager;
     private static Plugin plugin;
@@ -54,6 +56,7 @@ public final class Plugin extends JavaPlugin {
         projectileUtils = new ProjectileUtils();
         mSidebarManager = new SidebarManager();
         mDoubleJumpManager = new DoubleJumpManager();
+        mTrueFlightManager = new TrueFlightManager();
         mEffectManager = new EffectManager();
 
         //Register commands

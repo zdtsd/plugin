@@ -67,7 +67,7 @@ public class DoubleJumpManager {
                     playerTokens.remove(i);
                     if(playerTokens.isEmpty()){
                         mJumpTriggerTokens.put(player, null);
-                        if(player.getGameMode() != GameMode.CREATIVE){
+                        if(player.getGameMode() != GameMode.CREATIVE && !TrueFlightManager.hasTrueFlightToken(player)){
                             player.setAllowFlight(false);
                         }
                     }
@@ -75,8 +75,16 @@ public class DoubleJumpManager {
                 }
             }
         }
-        player.setAllowFlight(false);
+        if(player.getGameMode() != GameMode.CREATIVE && !TrueFlightManager.hasTrueFlightToken(player)){
+            player.setAllowFlight(false);
+        }
         return false;
 
+    }
+
+    //Returns TRUE if the player currently holds at least one double jump token.
+    public static boolean hasDoubleJumpToken(Player player){
+        List<DoubleJumpToken> playerTokens = mJumpTriggerTokens.get(player);
+        return playerTokens != null && !playerTokens.isEmpty();
     }
 }

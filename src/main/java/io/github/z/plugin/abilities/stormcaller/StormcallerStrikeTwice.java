@@ -46,6 +46,7 @@ public class StormcallerStrikeTwice extends CooldownAbility {
             mStaticCharge = (StormcallerStaticCharge) AbilityManager.getAbility(mPlayer, StormcallerStaticCharge.class);
         }
         return mStaticCharge;
+        
     }
 
     @Override

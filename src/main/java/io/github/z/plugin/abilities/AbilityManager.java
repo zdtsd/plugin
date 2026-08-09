@@ -1,9 +1,6 @@
 package io.github.z.plugin.abilities;
 
-import io.github.z.plugin.abilities.stormcaller.StormcallerBoltwave;
-import io.github.z.plugin.abilities.stormcaller.StormcallerStaticCharge;
-import io.github.z.plugin.abilities.stormcaller.StormcallerStrikeTwice;
-import io.github.z.plugin.abilities.stormcaller.StormcallerZap;
+import io.github.z.plugin.abilities.stormcaller.*;
 import io.github.z.plugin.abilities.swashbuckler.*;
 import io.github.z.plugin.abilities.testing.TestingAbilityArcParticle;
 import io.github.z.plugin.abilities.testing.TestingAbilityOne;
@@ -52,6 +49,7 @@ public class AbilityManager {
         mAllAbilities.add(StormcallerZap.DATA);
         mAllAbilities.add(StormcallerBoltwave.DATA);
         mAllAbilities.add(StormcallerStrikeTwice.DATA);
+        mAllAbilities.add(StormcallerVoltstep.DATA);
 
         //Create a scoreboard for ALL abilities
         for(AbilityData<?> data : mAllAbilities){

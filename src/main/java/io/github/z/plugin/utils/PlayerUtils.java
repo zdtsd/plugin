@@ -4,6 +4,7 @@ import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.itemstats.ItemStatUtils;
 import net.kyori.adventure.util.TriState;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
@@ -61,6 +62,10 @@ public class PlayerUtils {
             return true;
         }
         return false;
+    }
+
+    public static void playerTeleport(Player player, Location location){
+        player.teleport(location);
     }
 
 

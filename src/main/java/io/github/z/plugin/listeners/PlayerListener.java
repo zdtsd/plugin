@@ -1,6 +1,7 @@
 package io.github.z.plugin.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import io.github.z.plugin.Plugin;
 import io.github.z.plugin.abilities.AbilityManager;
 import io.github.z.plugin.effects.EffectManager;
 import io.github.z.plugin.events.DamageEvent;
@@ -8,6 +9,7 @@ import io.github.z.plugin.events.PlayerLandsOnGroundEvent;
 import io.github.z.plugin.itemstats.ItemStatManager;
 import io.github.z.plugin.utils.DamageUtils;
 import io.github.z.plugin.utils.ProjectileUtils;
+import io.github.z.plugin.utils.TrueFlightManager;
 import io.papermc.paper.event.entity.EntityLoadCrossbowEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -36,10 +38,17 @@ public class PlayerListener implements Listener {
 
     //WARNING: Asynchronous packet function, do not add API calls.
     public static void registerItemDrop(Player player){
-        if(playerDropKeyBuffer.contains(player)){
-            return;
+        if(!playerDropKeyBuffer.contains(player)){
+            playerDropKeyBuffer.add(player);
         }
-        playerDropKeyBuffer.add(player);
+        Bukkit.getLogger().info("Player drop detected!");
+
+        Bukkit.getScheduler().runTask(Plugin.getPlugin(), () ->{
+            Bukkit.getLogger().info("Player drop executed!");
+            PlayerListener.playerPressDropKeyEvent(player);
+            player.updateInventory();
+        });
+
     }
 
     @EventHandler
@@ -47,17 +56,17 @@ public class PlayerListener implements Listener {
         //Return if player pressed the drop key.
         if(playerDropKeyBuffer.contains(event.getPlayer())){
             playerDropKeyBuffer.remove(event.getPlayer());
-            playerPressDropKeyEvent(event.getPlayer());
             return;
         }
-
         AbilityManager.onClick(event.getPlayer(), event);
     }
 
     //Note: Not actually an event, called in PlayerInteractEvent
-    private void playerPressDropKeyEvent(Player player){
+    private static void playerPressDropKeyEvent(Player player){
         ItemStatManager.onPlayerDropKey(player);
         AbilityManager.onDropKey(player);
+        Bukkit.getLogger().info("Player drop event triggered!");
+
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -69,6 +78,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void playerFlyEvent(PlayerToggleFlightEvent event){
+        if(TrueFlightManager.hasTrueFlightToken(event.getPlayer())){
+            return;
+        }
         if(event.getPlayer().getGameMode() != GameMode.CREATIVE){
             event.setCancelled(true);
         }

@@ -10,7 +10,8 @@ public enum EffectType {
     STUN("stun", StunEffect::new),
     SLOW_FALLING("slow_falling", FallSpeedEffect::new),
     AGILITY("agility", AgilityEffect::new),
-    FEATHER_FALLING("feather_falling", FeatherFallingEffect::new);
+    FEATHER_FALLING("feather_falling", FeatherFallingEffect::new),
+    TRUE_FLIGHT("true_flight", TrueFlightEffect::new);
 
     private final String name;
     private final BiFunction<Integer, Integer, Effect> factory;
